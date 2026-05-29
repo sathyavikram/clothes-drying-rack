@@ -21,12 +21,12 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 2 — Leg Segment + Leg Connector (`part_01_leg_segment.py`, `part_01b_leg_connector.py`) ✅
+## Phase 2 — Leg Segment (`part_01_leg_segment.py`) ✅
 - Rectangular hollow segment max length 220 mm (calculated as diagonal of 175x175mm bed minus length of pegs)
-- Solid rectangular pegs at both ends
-- Companion rectangular connector (resistance fit receiver ends) to join two segments tool-free
-- Print orientation: segment lying flat at 45° diagonal; connector upright
-- Export STEP + STL for each; visual validation pass on each
+- Integrated solid rectangular male peg at one end
+- Open hollow tube body acts as the native female receiver socket at the opposite end
+- Print orientation: segment lying flat at 45° diagonal
+- Export STEP + STL; visual validation pass
 
 ---
 
@@ -48,7 +48,7 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 5 — Main Top Drying Rod Segment (`part_04_main_rod.py`)
 - Rectangular hollow segment ≤ 220 mm for the uppermost horizontal rod
-- Rectangular friction fit pegs at ends (matches leg segment joint spec)
+- Male peg/female socket joinery to match legs
 - Export STEP + STL; visual validation pass
 
 ---
@@ -56,7 +56,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 6 — Secondary & Lower Drying Rods (`part_05_secondary_rod.py`, `part_06_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
-- Both segmented if > 220 mm; rectangular friction fit peg joints
+- Both segmented if > 220 mm; male peg/female socket joinery
 - Export STEP + STL each; visual validation pass
 
 ---
@@ -99,7 +99,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 12 — Full Assembly (`assembly.py`)
 - Clears `exports/`; regenerates all parts
 - Loads every STEP file; positions all instances
-- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps, connectors (as required per leg/rod count)
+- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps
 - Exports `assembly.step` and `assembly.stl`
 - Visual validation pass
 

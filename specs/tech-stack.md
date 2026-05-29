@@ -20,7 +20,7 @@
 - Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
-- Structural connections rely on precise rectangular friction fits 
+- Structural connections rely on precise rectangular friction fits.
 
 ## FDM Print Constraints
 
@@ -33,7 +33,7 @@
 | Min wall thickness | 3.0 mm (structural), 2.0 mm (cosmetic) |
 | Overhang rule | ≤ 45° without support |
 
-Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2}$) with alignment friction-fit peg joints and connectors.
+Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2}$) with integrated alignment friction-fit male/female peg joints.
 
 ## Fit Parameters (canonical — defined in `params.py`)
 
@@ -43,7 +43,6 @@ Long structural members (legs, rods) exceed the build plate and **must** be segm
 | `LEG_WIDTH` | 25.0 mm |
 | `LEG_DEPTH` | 15.0 mm |
 | `PEG_LENGTH` | 25.0 mm |
-| `CONNECTOR_LENGTH` | 60.0 mm |
 
 ## Dimensions — 79" Variant (canonical model)
 
@@ -68,8 +67,7 @@ All values converted to mm from the reference images:
 clothes-drying-rack/
 ├── specs/                  ← project constitution (this folder)
 ├── params.py               ← all dimensions + SCALE + paths 
-├── part_01_leg_segment.py  ← rectangular hollow segment, friction-fit male pegs
-├── part_01b_leg_connector.py ← rectangular connector block, female slots both ends
+├── part_01_leg_segment.py  ← rectangular hollow segment, integrated friction-fit peg one side
 ├── part_02_xframe_hinge.py
 ├── part_03_top_bracket.py
 ├── part_04_main_rod.py
