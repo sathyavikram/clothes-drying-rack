@@ -10,3 +10,4 @@ Requirements
 - 3 retractable rods offer ample drying space for shirts, pants, skirts, sheets, and blankets
 - Anti-Slip Feet
 - Use freeCAD python to create 3D CAD model
+- look at all images inside specs/reference-images to derive all requirements if missed above
