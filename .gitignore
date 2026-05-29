@@ -219,3 +219,6 @@ __marimo__/
 
 # 3D model assets
 spec/reference-images/
+
+# macOS
+.DS_Store
