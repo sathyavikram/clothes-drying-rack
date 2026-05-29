@@ -20,8 +20,21 @@ FOLDED_THICKNESS     =  102.0 * SCALE   # 4.0" folded thickness
 # ─── Tube profile (leg tubes) ─────────────────────────────────────────────────
 # Estimated from reference images; adjust if measured values differ
 TUBE_OD              =   25.0 * SCALE   # outer diameter
-TUBE_WALL            =    2.0 * SCALE   # wall thickness
-TUBE_ID              = TUBE_OD - 2.0 * TUBE_WALL   # inner diameter (derived)
+TUBE_WALL            =    3.0 * SCALE   # wall thickness (updated for Phase 2)
+TUBE_ID              = TUBE_OD - 2.0 * TUBE_WALL   # inner diameter (derived = 19mm)
+SEGMENT_BODY_LENGTH  =  170.0 * SCALE
+
+# ─── Threaded Spigot & Sleeve joinery (Phase 2) ───────────────────────────────
+THREAD_CLEARANCE       = 0.6 * SCALE
+GENERAL_CLEARANCE      = 0.4 * SCALE
+THREAD_NOM_RADIUS      = 10.0 * SCALE   # nominal 20 mm OD thread
+THREAD_PITCH           = 4.0 * SCALE
+THREAD_LENGTH          = 20.0 * SCALE
+SPIGOT_OD              = 20.0 * SCALE
+SPIGOT_LENGTH          = 25.0 * SCALE
+SLEEVE_OD              = 34.0 * SCALE
+SLEEVE_LENGTH          = 60.0 * SCALE
+SLEEVE_BORE_DEPTH      = 25.0 * SCALE
 
 # ─── Rod profile (drying rods share leg-tube profile) ────────────────────────
 ROD_OD               = TUBE_OD
@@ -90,6 +103,17 @@ if __name__ == "__main__":
         ("TUBE_OD",             TUBE_OD,             "mm"),
         ("TUBE_WALL",           TUBE_WALL,           "mm"),
         ("TUBE_ID",             TUBE_ID,             "mm  (derived)"),
+        ("SEGMENT_BODY_LENGTH", SEGMENT_BODY_LENGTH, "mm"),
+        ("THREAD_CLEARANCE",    THREAD_CLEARANCE,    "mm"),
+        ("GENERAL_CLEARANCE",   GENERAL_CLEARANCE,   "mm"),
+        ("THREAD_NOM_RADIUS",   THREAD_NOM_RADIUS,   "mm"),
+        ("THREAD_PITCH",        THREAD_PITCH,        "mm"),
+        ("THREAD_LENGTH",       THREAD_LENGTH,       "mm"),
+        ("SPIGOT_OD",           SPIGOT_OD,           "mm"),
+        ("SPIGOT_LENGTH",       SPIGOT_LENGTH,       "mm"),
+        ("SLEEVE_OD",           SLEEVE_OD,           "mm"),
+        ("SLEEVE_LENGTH",       SLEEVE_LENGTH,       "mm"),
+        ("SLEEVE_BORE_DEPTH",   SLEEVE_BORE_DEPTH,   "mm"),
         ("ROD_OD",              ROD_OD,              "mm"),
         ("ROD_WALL",            ROD_WALL,            "mm"),
         ("ROD_ID",              ROD_ID,              "mm  (derived)"),
