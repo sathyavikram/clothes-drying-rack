@@ -12,7 +12,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 1 — Project Skeleton
+## Phase 1 — Project Skeleton ✅
 - Create `params.py` with all dimensions (inches → mm), `SCALE`, build-plate constants, tolerances, `PROJECT_DIR`, `EXPORT_DIR`
 - Create `exports/`, `3d-print/`, `media/` directories
 - Create `run.sh` (executable)
