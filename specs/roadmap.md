@@ -21,11 +21,11 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 2 — Leg Tube Segment + Sleeve Connector (`part_01_leg_tube.py`, `part_01b_tube_sleeve.py`)
-- Round hollow tube segment max length 220 mm (calculated as diagonal of 175x175mm bed minus tube OD, with margin)
-- Male-threaded spigot stubs at both ends (e.g., M20 pitch-4, 20 mm engagement)
-- Companion sleeve connector (rounded clamp, female-threaded ends) to join two segments tool-free
-- Print orientation: tube lying flat at 45° diagonal; sleeve upright
+## Phase 2 — Leg Segment + Leg Connector (`part_01_leg_segment.py`, `part_01b_leg_connector.py`) ✅
+- Rectangular hollow segment max length 220 mm (calculated as diagonal of 175x175mm bed minus length of pegs)
+- Solid rectangular pegs at both ends
+- Companion rectangular connector (resistance fit receiver ends) to join two segments tool-free
+- Print orientation: segment lying flat at 45° diagonal; connector upright
 - Export STEP + STL for each; visual validation pass on each
 
 ---
@@ -33,22 +33,22 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 3 — X-Frame Center Hinge Bracket (`part_02_xframe_hinge.py`)
 - The cross-pivot block at the midpoint of the X-frame
 - Pin/bolt hole through the crossing axis
-- Flat faces matching tube profile
+- Flat faces matching rectangular leg profile
 - Export STEP + STL; visual validation pass
 
 ---
 
 ## Phase 4 — Top T-Connector Bracket (`part_03_top_bracket.py`)
 - L-shaped or T-shaped bracket at the top of the X-frame
-- Accepts top rod and angled leg tube
+- Accepts top rod and angled leg segment
 - Bolt holes for assembly
 - Export STEP + STL; visual validation pass
 
 ---
 
 ## Phase 5 — Main Top Drying Rod Segment (`part_04_main_rod.py`)
-- Round hollow tube segment ≤ 220 mm for the uppermost horizontal rod
-- Threaded spigot joinery at ends (matches leg tube thread spec)
+- Rectangular hollow segment ≤ 220 mm for the uppermost horizontal rod
+- Rectangular friction fit pegs at ends (matches leg segment joint spec)
 - Export STEP + STL; visual validation pass
 
 ---
@@ -56,7 +56,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 6 — Secondary & Lower Drying Rods (`part_05_secondary_rod.py`, `part_06_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
-- Both segmented if > 220 mm; threaded spigot joinery
+- Both segmented if > 220 mm; rectangular friction fit peg joints
 - Export STEP + STL each; visual validation pass
 
 ---
@@ -76,22 +76,22 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 9 — Anti-Slip Foot Cap (`part_09_foot_cap.py`)
-- Hollow round cap that slides over the tube body end (ID = tube OD + 0.4 mm sliding tolerance)
+- Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
 ---
 
 ## Phase 10 — Rod End Cap (`part_10_rod_end_cap.py`)
-- Small cylindrical plug that caps the open ends of drying rods
-- Press-fit OD = rod ID − 0.2 mm
+- Small rectangular plug that caps the open ends of rectangular drying rods
+- Press-fit with tight tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
 ## Phase 11 — Windproof Hook (`part_11_windproof_hook.py`)
-- Small J-hook accessory that clips onto the drying rod
-- Clip opening matches rod OD + 0.4 mm tolerance
+- Small J-hook accessory that clips onto the rectangular drying rod
+- Clip opening matches rod dimensions + tolerance
 - Export STEP + STL; visual validation pass
 
 ---
@@ -99,7 +99,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 12 — Full Assembly (`assembly.py`)
 - Clears `exports/`; regenerates all parts
 - Loads every STEP file; positions all instances
-- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps, sleeve connectors (as required per leg count)
+- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps, connectors (as required per leg/rod count)
 - Exports `assembly.step` and `assembly.stl`
 - Visual validation pass
 
@@ -107,14 +107,12 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 13 — Final Export & Validation
 - Run `export_all.py` — confirm N/N parts exported
-- Verify all STL files are non-manifold-free
-- Confirm `assembly.step` opens cleanly in FreeCAD GUI
+- Select and render final assembly image
 - Tag release commit
 
 ---
 
 ## Out of Scope (v1)
 - Animated/articulated folding simulation
-- 63" and 95" size variants (add in v2 via `SCALE` parameter override)
 - Physical load/stress simulation
 - Colour/texture rendering

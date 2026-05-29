@@ -6,7 +6,7 @@ Design a complete, commercially sellable **FDM 3D-printable clothes drying rack*
 
 All parts must be:
 - **Printable**: each part fits diagonally within a 175 × 175 × 175 mm FDM build plate (split into segments with joinery where needed)
-- **Assembleable**: long members use printed threaded-spigot segments joined by printed sleeve connectors; brackets and hinges use M4/M5 bolts where a pivot or rigid clamp is required
+- **Assembleable**: long members use printed rectangular resistance fit segments joined by printed connectors; brackets and hinges use M4/M5 bolts where a pivot or rigid clamp is required
 - **Sellable**: the digital STL + STEP file set is the product — clean geometry, no degenerate faces, professional finish
 
 ## Reference Product
@@ -16,7 +16,7 @@ An X-frame collapsible laundry drying rack (79" medium variant):
 - 3 horizontal drying rods at different heights (1 main top rail, 1 secondary lower rail, 1 retractable side arm)
 - 6 locking hinges at the X-frame crossing points and rod attachment nodes
 - Anti-slip rubber foot caps on all 4 leg ends
-- Rod end caps (cylindrical plugs)
+- Rod end caps (rectangular plugs)
 - Middle stability bar connecting the two X-frames
 
 ## Target Customer

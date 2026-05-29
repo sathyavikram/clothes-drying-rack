@@ -19,32 +19,29 @@ Phase 1 delivers the non-geometric foundation of the project: the parameter file
 
 - **SCALE = 1.0 is the first line** of `params.py` — never changes position.
 - **All dimensions in millimetres** — inches are converted in `params.py` and never appear elsewhere.
-- **Derived values computed in params.py** — e.g. `TUBE_ID = TUBE_OD - 2 * TUBE_WALL`; part files do zero arithmetic on raw params.
-- **Segment max = 160 mm** — any dimension exceeding this triggers segmentation in later phases.
-- **Tolerances**: sliding fit = 0.4 mm, press fit = 0.2 mm (from `specs/tech-stack.md`).
-- **Joints**: Threaded features (standard alignment feature for all segmented parts).
-- `exports/` is git-ignored; `.gitkeep` files are committed to preserve the directory.
+- **Derived values computed in params.py** — e.g. `PEG_WIDTH = LEG_WIDTH - 2 * LEG_WALL`; part files do zero arithmetic on raw params.
+- **Segment max = 170 mm** — any dimension exceeding this (given 175mm bed diagonal) triggers segmentation in later phases.
+- **Tolerances**: friction fit clearance = 0.4 mm, press fit = 0.2 mm.
+- **Joints**: Rectangular friction-fit peg features (standard alignment feature for all segmented parts).
+- `exports/` is git-ignored.
 
-## Dimensions (79" variant, converted from specs/tech-stack.md)
+## Dimensions (79" variant, converted to mm)
 
-| Param name | Imperial | Metric (mm) |
-|---|---|---|
-| `RACK_LENGTH_MIN` | 51.1" | 1298 mm |
-| `RACK_LENGTH_MAX` | 79.0" | 2007 mm |
-| `RACK_HEIGHT` | 51.2" | 1300 mm |
-| `RACK_DEPTH` | 19.3" | 490 mm |
-| `FOOT_SPREAD` | 27.5" | 699 mm |
-| `FOLDED_LENGTH` | 56.3" | 1430 mm |
-| `FOLDED_THICKNESS` | 4.0" | 102 mm |
-| `TUBE_OD` | ~1.0" est. | 25 mm |
-| `TUBE_WALL` | ~0.08" est. | 2 mm |
-
-> Tube OD and wall are estimates from reference images. If measured values differ, update only `params.py`.
+| Param name | Metric (mm) |
+|---|---|
+| `RACK_LENGTH_MIN` | 1298 mm |
+| `RACK_LENGTH_MAX` | 2007 mm |
+| `RACK_HEIGHT` | 1300 mm |
+| `RACK_DEPTH` | 490 mm |
+| `FOOT_SPREAD` | 699 mm |
+| `FOLDED_LENGTH` | 1430 mm |
+| `FOLDED_THICKNESS` | 102 mm |
+| `LEG_WIDTH` | 25 mm |
+| `LEG_DEPTH` | 15 mm |
+| `LEG_WALL` | 3 mm |
 
 ## Context
 
-- Reference: `specs/mission.md`, `specs/tech-stack.md`, `specs/roadmap.md`
 - Build plate constraint: 175 × 175 × 175 mm
 - FreeCAD path (headless): `/Applications/FreeCAD.app/Contents/Resources/bin/freecadcmd`
 - FreeCAD path (GUI): `/Applications/FreeCAD.app/Contents/MacOS/FreeCAD`
-- No FreeCAD geometry is created in this phase; `params.py` must be importable by both plain `python3` and `freecadcmd`.

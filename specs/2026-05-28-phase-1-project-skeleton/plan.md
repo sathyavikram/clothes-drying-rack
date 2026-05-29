@@ -6,10 +6,10 @@
 2. First line: `SCALE = 1.0`.
 3. Add `BUILD_PLATE_X/Y/Z = 175.0 * SCALE`.
 4. Convert all 79" variant dimensions from `specs/tech-stack.md` from inches to mm; multiply each by `SCALE`.
-5. Add structural constants: `TUBE_OD`, `TUBE_WALL`, `TUBE_ID` (derived), `ROD_OD`, `ROD_WALL`, `ROD_ID`.
-6. Add tolerance constants: `TOLERANCE_SLIDING = 0.4 * SCALE`, `TOLERANCE_PRESS = 0.2 * SCALE`.
-7. Add print constraints: `WALL_MIN_STRUCTURAL = 3.0 * SCALE`, `WALL_MIN_COSMETIC = 2.0 * SCALE`, `SEGMENT_MAX = 160.0 * SCALE`.
-8. Add thread constants for joinery if needed.
+5. Add structural constants: `LEG_WIDTH`, `LEG_DEPTH`, `LEG_WALL`.
+6. Add tolerance constants: `FIT_CLEARANCE = 0.4 * SCALE`, `TOLERANCE_PRESS = 0.2 * SCALE`.
+7. Add print constraints: `WALL_MIN_STRUCTURAL = 3.0 * SCALE`, `WALL_MIN_COSMETIC = 2.0 * SCALE`, `SEGMENT_MAX = 170.0 * SCALE`.
+8. Add friction-fit peg constants for joinery if needed.
 9. Add `PROJECT_DIR` and `EXPORT_DIR` path constants.
 10. Add a `__main__` block that prints every key value with its name and unit.
 

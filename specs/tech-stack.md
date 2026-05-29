@@ -16,13 +16,11 @@
 
 - `SCALE = 1.0` is always the **first line** of `params.py`
 - All dimensions are in **millimetres** (convert inches → mm in `params.py`)
-- Primitives: `Part.makeBox`, `Part.makeCylinder`, `Part.makeSphere`, `Part.makeTorus`
+- Primitives: `Part.makeBox`, `Part.makeHollowBox`, etc.
 - Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
-- **Threads (male)**: built with `Part.makeHelix` + `makePipeShell`; combined with body via `Part.makeCompound` (never `.fuse()`) to avoid OCC boolean hangs
-- **Threads (female)**: cutter built with `fuse().removeSplitter()`; cut from body with `.cut()`
-- Male thread outer radius shrunk by `THREAD_CLEARANCE = 0.6 × SCALE`; female thread always at nominal dimensions
+- Structural connections rely on precise rectangular friction fits 
 
 ## FDM Print Constraints
 
@@ -35,21 +33,17 @@
 | Min wall thickness | 3.0 mm (structural), 2.0 mm (cosmetic) |
 | Overhang rule | ≤ 45° without support |
 
-Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2} - 25$ OD) with alignment threaded joints and rounded clamps (female threads) for mating faces.
+Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2}$) with alignment friction-fit peg joints and connectors.
 
-## Thread Parameters (canonical — defined in `params.py`)
+## Fit Parameters (canonical — defined in `params.py`)
 
 | Parameter | Value |
 |---|---|
-| `THREAD_NOM_RADIUS` | 10.0 mm (nominal M20) |
-| `THREAD_PITCH` | 4.0 mm (coarse FDM structural) |
-| `THREAD_LENGTH` | 20.0 mm (engagement per end) |
-| `THREAD_CLEARANCE` | 0.6 mm (male thread radius reduction) |
-| `GENERAL_CLEARANCE` | 0.4 mm (sliding fits, hex holes, pins) |
-| `SPIGOT_OD` | 20.0 mm |
-| `SPIGOT_LENGTH` | 25.0 mm |
-| `SLEEVE_OD` | 34.0 mm |
-| `SLEEVE_LENGTH` | 60.0 mm |
+| `FIT_CLEARANCE` | 0.4 mm (sliding/friction fits between pegs and bores) |
+| `LEG_WIDTH` | 25.0 mm |
+| `LEG_DEPTH` | 15.0 mm |
+| `PEG_LENGTH` | 25.0 mm |
+| `CONNECTOR_LENGTH` | 60.0 mm |
 
 ## Dimensions — 79" Variant (canonical model)
 
@@ -63,19 +57,19 @@ All values converted to mm from the reference images:
 | Foot spread (deployed) | 27.5" | 699 mm |
 | Folded length | 56.3" | 1430 mm |
 | Folded thickness | 4" | 102 mm |
-| Tube outer diameter | ~1.0" (est.) | 25 mm |
-| Tube wall thickness | ~0.12" | 3 mm |
+| Leg Cross-section width | ~1.0" | 25 mm |
+| Leg wall thickness | ~0.12" | 3 mm |
 
-> Tube OD and wall are estimated from reference images; adjust in `params.py` if measured values differ.
+> Outer dimensions and wall are estimated from reference images; adjust in `params.py` if measured values differ.
 
 ## File & Folder Structure
 
 ```
 clothes-drying-rack/
 ├── specs/                  ← project constitution (this folder)
-├── params.py               ← all dimensions + SCALE + paths + thread params
-├── part_01_leg_tube.py     ← round hollow tube segment, male-threaded spigots
-├── part_01b_tube_sleeve.py ← barrel connector, female-threaded both ends
+├── params.py               ← all dimensions + SCALE + paths 
+├── part_01_leg_segment.py  ← rectangular hollow segment, friction-fit male pegs
+├── part_01b_leg_connector.py ← rectangular connector block, female slots both ends
 ├── part_02_xframe_hinge.py
 ├── part_03_top_bracket.py
 ├── part_04_main_rod.py
