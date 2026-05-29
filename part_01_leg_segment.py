@@ -35,21 +35,16 @@ def construct_leg_segment():
     
     body = outer_box.cut(inner_box)
     
-    # Pegs (Solid Rectangular at both ends)
+    # Peg (Solid Rectangular at one end only, the other end acts as the female socket)
     peg_w = params.PEG_WIDTH
     peg_d = params.PEG_DEPTH
     peg_l = params.PEG_LENGTH
     
     peg1 = Part.makeBox(peg_w, peg_d, peg_l)
+    # Positioning peg so its base sits exactly flush with the body end (at l/2).
     peg1.Placement.Base = App.Vector(-peg_w/2, -peg_d/2, l/2)
     
-    peg2 = Part.makeBox(peg_w, peg_d, peg_l)
-    peg2.Placement.Base = App.Vector(-peg_w/2, -peg_d/2, -l/2 - peg_l)
-    
-    # Chamfer peg ends for easy insertion
-    # (To keep it simple and robust, standard pegs without chamfers for now, as it might fail on edge selection)
-    
-    shape = body.fuse(peg1).fuse(peg2).removeSplitter()
+    shape = body.fuse(peg1).removeSplitter()
     
     # Print orientation: lying flat on the long face (horizontal).
     # Currently Z is the long axis. We rotate about X by 90 deg so it lies flat on XY plane

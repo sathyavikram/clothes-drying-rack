@@ -14,7 +14,6 @@ import importlib
 importlib.reload(params)
 
 import part_01_leg_segment
-import part_01b_leg_connector
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPORT_BASE = os.path.join(CURRENT_DIR, "exports")
@@ -50,39 +49,35 @@ def build_assembly():
     
     # 1. Regenerate parts
     part_01_leg_segment.construct_leg_segment()
-    part_01b_leg_connector.construct_leg_connector()
     
     # 2. Setup doc
     doc = App.newDocument("Assembly")
     
     # 3. Load generated geometry
     seg_shape  = load_step("part_01_leg_segment.step")
-    conn_shape = load_step("part_01b_leg_connector.step")
     
     # Due to print orientation, segment is rotated.
     # We rotate it back for vertical assembly visualization.
     seg_rot_axis = App.Vector(1, 0, 0)
     seg_rot_angle = -90
     
-    color_seg  = (0.7, 0.7, 0.7)
-    color_conn = (0.2, 0.2, 0.8)
+    color_seg_bottom  = (0.7, 0.7, 0.7)
+    color_seg_top     = (0.5, 0.5, 0.5)
     
-    # Adjust spacing mathematically to show how legs attach to connector
-    # segment length is body + pegs
-    # However we're transforming the total shape. The pivot is the origin of the base shape.
-    # Just space them out vertically.
-    z_cursor = 0.0
+    # The origin of the base shape is precisely at the center of the segment body.
+    # The female end (open) is at -L/2 from the center.
+    # The male end (peg) starts exactly at +L/2 and extends to L/2 + peg_length.
+    # When standing upright, the peg is at the top.
     
     # Segment 1 (bottom)
-    add_part_to_doc(doc, seg_shape, "LegSegment_1", App.Vector(0, 0, z_cursor), seg_rot_axis, seg_rot_angle, color_seg)
-    z_cursor += params.SEGMENT_BODY_LENGTH / 2 + params.PEG_LENGTH / 2 + params.CONNECTOR_LENGTH / 2
-    
-    # Connector
-    add_part_to_doc(doc, conn_shape, "LegConnector", App.Vector(0, 0, z_cursor), App.Vector(0, 0, 1), 0, color_conn)
-    z_cursor += params.CONNECTOR_LENGTH / 2 + params.PEG_LENGTH / 2 + params.SEGMENT_BODY_LENGTH / 2
+    add_part_to_doc(doc, seg_shape, "LegSegment_Bottom", App.Vector(0, 0, 0), seg_rot_axis, seg_rot_angle, color_seg_bottom)
     
     # Segment 2 (top)
-    add_part_to_doc(doc, seg_shape, "LegSegment_2", App.Vector(0, 0, z_cursor), seg_rot_axis, seg_rot_angle, color_seg)
+    # Stacking it exactly on top of Segment 1. Segment 2's base/female end rests on Segment 1's shoulders.
+    # So we shift it up exactly by the body length.
+    z_cursor = params.SEGMENT_BODY_LENGTH
+    
+    add_part_to_doc(doc, seg_shape, "LegSegment_Top", App.Vector(0, 0, z_cursor), seg_rot_axis, seg_rot_angle, color_seg_top)
     
     # 4. Export Assembly
     objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
