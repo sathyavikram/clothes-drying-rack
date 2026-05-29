@@ -31,7 +31,7 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 3 — X-Frame Center Hinge Bracket (`part_02_xframe_hinge.py`)
-- The cross-pivot block at the midpoint of the X-frame
+- The cross-pivot block at the midpoint of the X-frame, designed to allow the legs to scissor and fold flat
 - Pin/bolt hole through the crossing axis
 - Flat faces matching rectangular leg profile
 - Export STEP + STL; visual validation pass
@@ -40,7 +40,7 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 4 — Top T-Connector Bracket (`part_03_top_bracket.py`)
 - L-shaped or T-shaped bracket at the top of the X-frame
-- Accepts top rod and angled leg segment
+- Accepts top rod and angled leg segment, incorporating a pivot to support the folding capability
 - Bolt holes for assembly
 - Export STEP + STL; visual validation pass
 
@@ -70,7 +70,7 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 8 — Locking Hinge Body (`part_08_locking_hinge.py`)
 - Flat rectangular plate with two pivot holes and a locking notch/detent
-- Models the 6-locking-hinge design seen in reference images
+- Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
 - Export STEP + STL; visual validation pass
 
 ---
