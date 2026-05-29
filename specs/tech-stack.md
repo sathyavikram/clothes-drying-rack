@@ -20,6 +20,9 @@
 - Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
+- **Threads (male)**: built with `Part.makeHelix` + `makePipeShell`; combined with body via `Part.makeCompound` (never `.fuse()`) to avoid OCC boolean hangs
+- **Threads (female)**: cutter built with `fuse().removeSplitter()`; cut from body with `.cut()`
+- Male thread outer radius shrunk by `THREAD_CLEARANCE = 0.6 × SCALE`; female thread always at nominal dimensions
 
 ## FDM Print Constraints
 
@@ -32,7 +35,21 @@
 | Min wall thickness | 3.0 mm (structural), 2.0 mm (cosmetic) |
 | Overhang rule | ≤ 45° without support |
 
-Long structural members (legs, rods) exceed the build plate and **must** be segmented into ≤ 160 mm sub-parts with alignment dowel holes (3 mm dia, 10 mm deep) and flat mating faces.
+Long structural members (legs, rods) exceed the build plate and **must** be segmented into ~170 mm body segments. Segments connect via **printed threaded spigot joints** — male M20 pitch-4 spigot stubs at each segment end, joined by a printed `part_01b_tube_sleeve` barrel connector with matching female threads. No external hardware required for tube-to-tube joining.
+
+## Thread Parameters (canonical — defined in `params.py`)
+
+| Parameter | Value |
+|---|---|
+| `THREAD_NOM_RADIUS` | 10.0 mm (nominal M20) |
+| `THREAD_PITCH` | 4.0 mm (coarse FDM structural) |
+| `THREAD_LENGTH` | 20.0 mm (engagement per end) |
+| `THREAD_CLEARANCE` | 0.6 mm (male thread radius reduction) |
+| `GENERAL_CLEARANCE` | 0.4 mm (sliding fits, hex holes, pins) |
+| `SPIGOT_OD` | 20.0 mm |
+| `SPIGOT_LENGTH` | 25.0 mm |
+| `SLEEVE_OD` | 34.0 mm |
+| `SLEEVE_LENGTH` | 60.0 mm |
 
 ## Dimensions — 79" Variant (canonical model)
 
@@ -47,7 +64,7 @@ All values converted to mm from the reference images:
 | Folded length | 56.3" | 1430 mm |
 | Folded thickness | 4" | 102 mm |
 | Tube outer diameter | ~1.0" (est.) | 25 mm |
-| Tube wall thickness | ~0.08" (est.) | 2 mm |
+| Tube wall thickness | ~0.12" | 3 mm |
 
 > Tube OD and wall are estimated from reference images; adjust in `params.py` if measured values differ.
 
@@ -56,8 +73,9 @@ All values converted to mm from the reference images:
 ```
 clothes-drying-rack/
 ├── specs/                  ← project constitution (this folder)
-├── params.py               ← all dimensions + SCALE + paths
-├── part_01_leg_tube.py
+├── params.py               ← all dimensions + SCALE + paths + thread params
+├── part_01_leg_tube.py     ← round hollow tube segment, male-threaded spigots
+├── part_01b_tube_sleeve.py ← barrel connector, female-threaded both ends
 ├── part_02_xframe_hinge.py
 ├── part_03_top_bracket.py
 ├── part_04_main_rod.py

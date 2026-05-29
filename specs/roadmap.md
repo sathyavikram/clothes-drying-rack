@@ -21,11 +21,12 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 2 — Leg Tube Segment (`part_01_leg_tube.py`)
-- Single straight hollow square/round tube segment ≤ 160 mm
-- Dowel holes at both ends for segment-to-segment joining
-- Print orientation: lying flat on its long face
-- Export STEP + STL; visual validation pass
+## Phase 2 — Leg Tube Segment + Sleeve Connector (`part_01_leg_tube.py`, `part_01b_tube_sleeve.py`)
+- Round hollow tube segment: OD 25 mm, wall 3 mm, body 170 mm
+- Male-threaded spigot stubs at both ends (M20 pitch-4, 20 mm engagement)
+- Companion sleeve connector: OD 34 mm, 60 mm long, female-threaded bores at both ends — two segments screw together tool-free
+- Print orientation: tube lying flat at 45° diagonal; sleeve upright
+- Export STEP + STL for each; visual validation pass on each
 
 ---
 
@@ -46,8 +47,8 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 5 — Main Top Drying Rod Segment (`part_04_main_rod.py`)
-- Round hollow tube segment ≤ 160 mm for the uppermost horizontal rod
-- Dowel joinery at ends
+- Round hollow tube segment ≤ 170 mm for the uppermost horizontal rod
+- Threaded spigot joinery at ends (M20 pitch-4, reuses leg tube thread spec)
 - Export STEP + STL; visual validation pass
 
 ---
@@ -55,7 +56,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 6 — Secondary & Lower Drying Rods (`part_05_secondary_rod.py`, `part_06_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
-- Both segmented if > 160 mm
+- Both segmented at 170 mm if total length > 170 mm; threaded spigot joinery
 - Export STEP + STL each; visual validation pass
 
 ---
@@ -75,7 +76,7 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 9 — Anti-Slip Foot Cap (`part_09_foot_cap.py`)
-- Hollow square/round cap that slides over leg tube end
+- Hollow round cap that slides over the tube body end (ID = tube OD + 0.4 mm sliding tolerance)
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
@@ -98,7 +99,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 12 — Full Assembly (`assembly.py`)
 - Clears `exports/`; regenerates all parts
 - Loads every STEP file; positions all instances
-- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps
+- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps, sleeve connectors (as required per leg count)
 - Exports `assembly.step` and `assembly.stl`
 - Visual validation pass
 
