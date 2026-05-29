@@ -1,44 +1,57 @@
-# Validation — Phase 2: Leg Tube Segment
+# Validation — Phase 2: Leg Tube Segment + Tube Sleeve Connector
 
 ## Required Checks
 
+### `part_01_leg_tube.py`
 1. **Headless build passes**
    ```bash
    ./run.sh part_01_leg_tube.py
    ```
-   - No Python traceback in output.
-   - Output contains STEP and STL export confirmation lines.
-   - Final line is `FreeCAD terminated.`
+   - No Python traceback. STEP + STL export lines present. `FreeCAD terminated.` last.
 
-2. **Export files exist**
-   - `exports/part_01_leg_tube.step` present and non-zero bytes.
-   - `exports/part_01_leg_tube.stl` present and non-zero bytes.
+2. **Export files exist**: `exports/part_01_leg_tube.step` and `.stl`, non-zero bytes.
 
-3. **Geometry sanity** (print `shape.Volume` in the script)
-   - Volume is non-zero and consistent with a hollow square tube:
-     `expected ≈ (25² − 21²) × 220 = (625 − 441) × 220 = 40 480 mm³`
+3. **Volume sanity** — tube body only (excluding thread compound):
+   - Hollow cylinder: `π × (12.5² − 9.5²) × 170 ≈ 34 200 mm³` (approximate; compound adds thread volume on top)
+   - Printed `shape.Volume` must be non-zero and in the right order of magnitude.
 
-4. **Dowel hole alignment** — confirm two cylindrical voids are centred and open at both ends (visible in FreeCAD GUI or confirmed by visual validation).
+4. **Thread geometry visible**: spigot stubs present at both ends with thread helix visible in GUI.
 
-5. **Visual validation via FreeCAD MCP**
-   - Invoke `freecad-visual-validation` agent after export.
-   - Required views: Front, Top, Right, Isometric.
-   - Report must return **PASS** on all views.
-   - Failure criteria: invisible geometry, zero-volume, missing dowel holes, corrupt mesh.
+### `part_01b_tube_sleeve.py`
+1. **Headless build passes**
+   ```bash
+   ./run.sh part_01b_tube_sleeve.py
+   ```
+   - No Python traceback. STEP + STL export lines present. `FreeCAD terminated.` last.
+
+2. **Export files exist**: `exports/part_01b_tube_sleeve.step` and `.stl`, non-zero bytes.
+
+3. **Volume sanity** — sleeve body:
+   - Solid cylinder minus two bores: `π × 17² × 60 − 2 × π × 10² × 25 ≈ 54 700 − 15 700 ≈ 39 000 mm³`
+   - Printed `shape.Volume` must be non-zero and in the right order of magnitude.
+
+4. **Thread engagement check**: female thread bores visible at each end; thread helices visible in GUI cross-section.
+
+## Visual Validation via FreeCAD MCP
+- Invoke `freecad-visual-validation` agent for `part_01_leg_tube.step`.
+  - Required views: Front, Top, Right, Isometric.
+  - Must show: hollow tube body, two spigot stubs, thread helix on each stub, tip chamfers.
+  - Report must return **PASS**.
+- Invoke `freecad-visual-validation` agent for `part_01b_tube_sleeve.step`.
+  - Required views: Front, Top, Isometric, cross-section (if supported).
+  - Must show: barrel body, two open bores at ends with thread helices cut in.
+  - Report must return **PASS**.
 
 ## Manual Review
-
-- Open in FreeCAD GUI (`./run.sh open part_01_leg_tube`) and confirm:
-  - Hollow interior is visible in cross-section.
-  - Dowel holes are present at both ends.
-  - Segment length reads ~220 mm along the long axis.
-  - Wall thickness reads ~2 mm on all four sides.
+- Open each part in FreeCAD GUI and confirm:
+  - Tube: hollow interior visible, two spigot stubs, thread helix on each, no zero-volume faces.
+  - Sleeve: two bored ends with female threads, solid mid-wall, no open faces.
+- Visually confirm thread pitch and profile match between male spigot and female bore (same pitch = 4 mm).
 
 ## Merge Criteria
-
-- All Required Checks pass.
-- `freecad-visual-validation` agent returns PASS.
-- `params.py` contains `TUBE_OD`, `TUBE_WALL`, `TUBE_ID`, `SEGMENT_LENGTH`, `DOWEL_DIA`, `DOWEL_DEPTH`.
-- Part file has no hard-coded dimensions.
-- Print orientation comment is present at the top of `part_01_leg_tube.py`.
+- All Required Checks pass for both parts.
+- Both `freecad-visual-validation` runs return PASS.
+- `params.py` contains all Phase 2 thread and tube params.
+- Neither part file contains raw numbers.
+- Print orientation comment present in both part files.
 - `CHANGELOG.md` updated before merge.
