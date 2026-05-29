@@ -22,9 +22,9 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 2 — Leg Tube Segment + Sleeve Connector (`part_01_leg_tube.py`, `part_01b_tube_sleeve.py`)
-- Round hollow tube segment: OD 25 mm, wall 3 mm, body 170 mm
-- Male-threaded spigot stubs at both ends (M20 pitch-4, 20 mm engagement)
-- Companion sleeve connector: OD 34 mm, 60 mm long, female-threaded bores at both ends — two segments screw together tool-free
+- Round hollow tube segment max length 220 mm (calculated as diagonal of 175x175mm bed minus tube OD, with margin)
+- Male-threaded spigot stubs at both ends (e.g., M20 pitch-4, 20 mm engagement)
+- Companion sleeve connector (rounded clamp, female-threaded ends) to join two segments tool-free
 - Print orientation: tube lying flat at 45° diagonal; sleeve upright
 - Export STEP + STL for each; visual validation pass on each
 
@@ -47,8 +47,8 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 5 — Main Top Drying Rod Segment (`part_04_main_rod.py`)
-- Round hollow tube segment ≤ 170 mm for the uppermost horizontal rod
-- Threaded spigot joinery at ends (M20 pitch-4, reuses leg tube thread spec)
+- Round hollow tube segment ≤ 220 mm for the uppermost horizontal rod
+- Threaded spigot joinery at ends (matches leg tube thread spec)
 - Export STEP + STL; visual validation pass
 
 ---
@@ -56,7 +56,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 6 — Secondary & Lower Drying Rods (`part_05_secondary_rod.py`, `part_06_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
-- Both segmented at 170 mm if total length > 170 mm; threaded spigot joinery
+- Both segmented if > 220 mm; threaded spigot joinery
 - Export STEP + STL each; visual validation pass
 
 ---

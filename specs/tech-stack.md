@@ -35,7 +35,7 @@
 | Min wall thickness | 3.0 mm (structural), 2.0 mm (cosmetic) |
 | Overhang rule | ≤ 45° without support |
 
-Long structural members (legs, rods) exceed the build plate and **must** be segmented into ~170 mm body segments. Segments connect via **printed threaded spigot joints** — male M20 pitch-4 spigot stubs at each segment end, joined by a printed `part_01b_tube_sleeve` barrel connector with matching female threads. No external hardware required for tube-to-tube joining.
+Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2} - 25$ OD) with alignment threaded joints and rounded clamps (female threads) for mating faces.
 
 ## Thread Parameters (canonical — defined in `params.py`)
 

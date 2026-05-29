@@ -32,8 +32,6 @@ Check each printed value against `specs/tech-stack.md`:
 | `SEGMENT_MAX` | 160.0 mm |
 | `TOLERANCE_SLIDING` | 0.4 mm |
 | `TOLERANCE_PRESS` | 0.2 mm |
-| `DOWEL_DIA` | 3.0 mm |
-| `DOWEL_DEPTH` | 10.0 mm |
 | `BUILD_PLATE_X/Y/Z` | 175.0 mm each |
 | `EXPORT_DIR` | Absolute path ending in `/exports` |
 

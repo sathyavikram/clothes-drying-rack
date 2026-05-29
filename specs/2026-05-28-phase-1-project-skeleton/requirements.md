@@ -22,7 +22,7 @@ Phase 1 delivers the non-geometric foundation of the project: the parameter file
 - **Derived values computed in params.py** — e.g. `TUBE_ID = TUBE_OD - 2 * TUBE_WALL`; part files do zero arithmetic on raw params.
 - **Segment max = 160 mm** — any dimension exceeding this triggers segmentation in later phases.
 - **Tolerances**: sliding fit = 0.4 mm, press fit = 0.2 mm (from `specs/tech-stack.md`).
-- **Dowels**: 3 mm diameter, 10 mm deep (standard alignment feature for all segmented parts).
+- **Joints**: Threaded features (standard alignment feature for all segmented parts).
 - `exports/` is git-ignored; `.gitkeep` files are committed to preserve the directory.
 
 ## Dimensions (79" variant, converted from specs/tech-stack.md)

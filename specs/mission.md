@@ -5,8 +5,8 @@
 Design a complete, commercially sellable **FDM 3D-printable clothes drying rack** — a faithful replica of the X-frame stainless steel drying rack, re-engineered entirely in printable plastic parts.
 
 All parts must be:
-- **Printable**: each part fits within a 175 × 175 × 175 mm FDM build plate (split into segments with joinery where needed)
-- **Assembleable**: long members use printed threaded-spigot segments joined by printed sleeve connectors (no external hardware); brackets and hinges use M4/M5 bolts where a pivot or rigid clamp is required
+- **Printable**: each part fits diagonally within a 175 × 175 × 175 mm FDM build plate (split into segments with joinery where needed)
+- **Assembleable**: long members use printed threaded-spigot segments joined by printed sleeve connectors; brackets and hinges use M4/M5 bolts where a pivot or rigid clamp is required
 - **Sellable**: the digital STL + STEP file set is the product — clean geometry, no degenerate faces, professional finish
 
 ## Reference Product

@@ -40,10 +40,6 @@ WALL_MIN_STRUCTURAL  =    3.0 * SCALE   # minimum structural wall thickness
 WALL_MIN_COSMETIC    =    2.0 * SCALE   # minimum cosmetic wall thickness
 SEGMENT_MAX          =  160.0 * SCALE   # max segment length (build-plate limit)
 
-# ─── Dowel joinery (segment-to-segment alignment) ─────────────────────────────
-DOWEL_DIA            =    3.0 * SCALE
-DOWEL_DEPTH          =   10.0 * SCALE
-
 # ─── Hardware clearance holes ─────────────────────────────────────────────────
 BOLT_DIA_M4          =    4.0 * SCALE
 BOLT_DIA_M5          =    5.0 * SCALE
@@ -103,8 +99,6 @@ if __name__ == "__main__":
         ("WALL_MIN_STRUCTURAL", WALL_MIN_STRUCTURAL, "mm"),
         ("WALL_MIN_COSMETIC",   WALL_MIN_COSMETIC,   "mm"),
         ("SEGMENT_MAX",         SEGMENT_MAX,         "mm"),
-        ("DOWEL_DIA",           DOWEL_DIA,           "mm"),
-        ("DOWEL_DEPTH",         DOWEL_DEPTH,         "mm"),
         ("BOLT_DIA_M4",         BOLT_DIA_M4,         "mm"),
         ("BOLT_DIA_M5",         BOLT_DIA_M5,         "mm"),
         ("BOLT_HOLE_CLEAR_M4",  BOLT_HOLE_CLEAR_M4,  "mm"),
