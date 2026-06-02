@@ -49,3 +49,7 @@ if __name__ == "__main__":
     for k, v in globals().items():
         if k.isupper() and isinstance(v, (int, float, str)):
             print(f"{k} = {v}")
+
+# ─── Threading and Clearance ──────────────────────────────────────────────────
+THREAD_CLEARANCE     = 0.6 * SCALE   # shrink male thread OD for easy rotation after printing
+GENERAL_CLEARANCE    = 0.4 * SCALE   # sliding fits, pins

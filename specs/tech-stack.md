@@ -40,6 +40,8 @@ Long structural members (legs, rods) exceed the build plate and **must** be segm
 | Parameter | Value |
 |---|---|
 | `FIT_CLEARANCE` | 0.4 mm (sliding/friction fits between pegs and bores) |
+| `THREAD_CLEARANCE` | 0.6 mm (shrinks male thread radius for post-print rotation) |
+| `GENERAL_CLEARANCE` | 0.4 mm (clearance holes for pins/shafts) |
 | `LEG_WIDTH` | 25.0 mm |
 | `LEG_DEPTH` | 15.0 mm |
 | `PEG_LENGTH` | 25.0 mm |
@@ -65,19 +67,21 @@ All values converted to mm from the reference images:
 
 ```
 clothes-drying-rack/
-├── specs/                  ← project constitution (this folder)
-├── params.py               ← all dimensions + SCALE + paths 
-├── part_01_leg_segment.py  ← rectangular hollow segment, integrated friction-fit peg one side
-├── part_02_xframe_hinge.py
-├── part_03_top_bracket.py
-├── part_04_main_rod.py
-├── part_05_secondary_rod.py
-├── part_06_side_arm_rod.py
-├── part_07_stability_bar.py
-├── part_08_locking_hinge.py
-├── part_09_foot_cap.py
-├── part_10_rod_end_cap.py
-├── part_11_windproof_hook.py
+├── specs/                           ← project constitution (this folder)
+├── params.py                        ← all dimensions + SCALE + paths 
+├── part_01_leg_segment.py           ← rectangular hollow segment, integrated friction-fit peg one side
+├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
+├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
+├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)
+├── part_05_top_bracket.py
+├── part_06_main_rod.py
+├── part_07_secondary_rod.py
+├── part_08_side_arm_rod.py
+├── part_09_stability_bar.py
+├── part_10_locking_hinge.py
+├── part_11_foot_cap.py
+├── part_12_rod_end_cap.py
+├── part_13_windproof_hook.py
 ├── assembly.py
 ├── export_all.py
 ├── run.sh

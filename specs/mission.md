@@ -6,7 +6,7 @@ Design a complete, commercially sellable **FDM 3D-printable clothes drying rack*
 
 All parts must be:
 - **Printable**: each part fits diagonally within a 175 × 175 × 175 mm FDM build plate (split into segments with joinery where needed)
-- **Assembleable**: long members use printed rectangular resistance fit segments joined end-to-end via integrated male-female socket pegs; brackets and hinges use M4/M5 bolts where a pivot or rigid clamp is required
+- **Assembleable**: long members use printed rectangular resistance fit segments joined end-to-end via integrated male-female socket pegs; pivots and hinges use fully 3D-printable threaded pins/brackets ensuring 100% plastic assembly without non-printable metal hardware.
 - **Sellable**: the digital STL + STEP file set is the product — clean geometry, no degenerate faces, professional finish
 
 ## Reference Product

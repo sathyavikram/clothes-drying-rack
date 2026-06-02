@@ -30,30 +30,32 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 3 — X-Frame Center Hinge Bracket (`part_02_xframe_hinge.py`)
-- The cross-pivot block at the midpoint of the X-frame, designed to allow the legs to scissor and fold flat
-- Pin/bolt hole through the crossing axis
-- Flat faces matching rectangular leg profile
+## Phase 3 — X-Frame Center Hinge ✅
+- Replaced monolithic print-in-place block with a robust 3-part threaded mechanism:
+  - `part_02_xframe_hinge_bottom.py`: Bottom hinge bracket featuring a female M16 equivalent thread.
+  - `part_03_xframe_hinge_top.py`: Top hinge bracket featuring a clearance bore.
+  - `part_04_xframe_hinge_pin.py`: Male threaded locking pivot pin printed flat to ensure strong horizontal layer orientation.
+- Integrates seamlessly with X-frame rectangular leg segments
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 4 — Top T-Connector Bracket (`part_03_top_bracket.py`)
+## Phase 4 — Top T-Connector Bracket (`part_05_top_bracket.py`)
 - L-shaped or T-shaped bracket at the top of the X-frame
 - Accepts top rod and angled leg segment, incorporating a pivot to support the folding capability
-- Bolt holes for assembly
+- Threaded pivot mechanisms to follow similar 3-part approach as Phase 3 where required
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 5 — Main Top Drying Rod Segment (`part_04_main_rod.py`)
+## Phase 5 — Main Top Drying Rod Segment (`part_06_main_rod.py`)
 - Rectangular hollow segment ≤ 220 mm for the uppermost horizontal rod
 - Male peg/female socket joinery to match legs
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 6 — Secondary & Lower Drying Rods (`part_05_secondary_rod.py`, `part_06_side_arm_rod.py`)
+## Phase 6 — Secondary & Lower Drying Rods (`part_07_secondary_rod.py`, `part_08_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
 - Both segmented if > 220 mm; male peg/female socket joinery
@@ -61,35 +63,35 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 7 — Middle Stability Bar (`part_07_stability_bar.py`)
+## Phase 7 — Middle Stability Bar (`part_09_stability_bar.py`)
 - Short horizontal bar spanning between the two X-frame assemblies at mid-height
 - Fits within build plate (no segmentation needed)
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 8 — Locking Hinge Body (`part_08_locking_hinge.py`)
+## Phase 8 — Locking Hinge Body (`part_10_locking_hinge.py`)
 - Flat rectangular plate with two pivot holes and a locking notch/detent
 - Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 9 — Anti-Slip Foot Cap (`part_09_foot_cap.py`)
+## Phase 9 — Anti-Slip Foot Cap (`part_11_foot_cap.py`)
 - Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 10 — Rod End Cap (`part_10_rod_end_cap.py`)
+## Phase 10 — Rod End Cap (`part_12_rod_end_cap.py`)
 - Small rectangular plug that caps the open ends of rectangular drying rods
 - Press-fit with tight tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 11 — Windproof Hook (`part_11_windproof_hook.py`)
+## Phase 11 — Windproof Hook (`part_13_windproof_hook.py`)
 - Small J-hook accessory that clips onto the rectangular drying rod
 - Clip opening matches rod dimensions + tolerance
 - Export STEP + STL; visual validation pass
