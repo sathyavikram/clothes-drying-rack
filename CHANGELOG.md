@@ -22,3 +22,4 @@
 - Added Phase 1 project skeleton specification.
 - Implemented Phase 1 project skeleton.
 - Marked Phase 1 as complete in the roadmap.
+- Resolved headless boolean failures by implementing an origin-based generate + placement strategy for all Threaded features.

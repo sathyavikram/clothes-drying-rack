@@ -6,7 +6,7 @@ Phase 1 is complete and ready to merge when **all** of the following pass.
 
 ---
 
-### 1. Smoke-test: params.py runs clean
+### - [x] 1. Smoke-test: params.py runs clean
 
 ```bash
 python params.py
@@ -18,7 +18,7 @@ python params.py
 
 ---
 
-### 2. Manual review of printed values
+### - [x] 2. Manual review of printed values
 
 Check each printed value:
 
@@ -39,7 +39,7 @@ All values must be dimensionally consistent and match the specs.
 
 ---
 
-### 3. Directory structure exists
+### - [x] 3. Directory structure exists
 
 ```
 exports/    ← present
@@ -49,7 +49,7 @@ media/      ← present
 
 ---
 
-### 4. run.sh is executable
+### - [x] 4. run.sh is executable
 
 ```bash
 ./run.sh
@@ -59,7 +59,7 @@ Prints usage text and exits — no `permission denied`.
 
 ---
 
-### 5. .gitignore covers artefacts
+### - [x] 5. .gitignore covers artefacts
 
 `exports/`, `__pycache__/`, `*.pyc`, `*.pyo`, `*.FCBak`, `.DS_Store` are all present in `.gitignore`.
 

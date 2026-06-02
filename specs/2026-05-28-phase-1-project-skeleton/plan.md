@@ -9,7 +9,7 @@
 5. Add structural constants: `LEG_WIDTH`, `LEG_DEPTH`, `LEG_WALL`.
 6. Add tolerance constants: `FIT_CLEARANCE = 0.4 * SCALE`, `TOLERANCE_PRESS = 0.2 * SCALE`.
 7. Add print constraints: `WALL_MIN_STRUCTURAL = 3.0 * SCALE`, `WALL_MIN_COSMETIC = 2.0 * SCALE`, `SEGMENT_MAX = 170.0 * SCALE`.
-8. Add friction-fit peg constants for joinery if needed.
+8. Add timed threaded connection parameters and pitch constants for structural joinery.
 9. Add `PROJECT_DIR` and `EXPORT_DIR` path constants.
 10. Add a `__main__` block that prints every key value with its name and unit.
 

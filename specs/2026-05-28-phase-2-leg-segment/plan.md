@@ -6,8 +6,8 @@
 
 ## Task Group 2 — Leg Segment (`part_01_leg_segment.py`)
 1. Construct rectangular hollow segment body: Width 25 mm, Depth 15 mm, Wall 3 mm, length 170 mm.
-2. Construct solid rectangular peg at one end: Width 19 mm, Depth 9 mm, Length 25 mm.
-3. Fuse peg to the top of the segment body.
+2. Construct solid threaded male peg at one end: matching thread radius and pitch to ensure full mechanical thread timing lock.
+3. Form corresponding threaded female hole receiver at the body's opposite end.
 4. Export in print orientation (lying flat).
 
 

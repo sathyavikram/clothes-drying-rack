@@ -43,10 +43,10 @@ def construct_hinge_pin():
     p4 = App.Vector(inner_X,  0,  t_pitch * 0.35)
     t_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
 
-    t_sweep = Part.Wire(t_helix).makePipeShell([t_wire], True, True)
+    t_sweep = Part.Solid(Part.Wire(t_helix).makePipeShell([t_wire], True, True))
     t_core  = Part.makeCylinder(t_r_inner, t_length, App.Vector(0, 0, 0))
     
-    # Chamfer at thread tip (entry bevel)
+    thread_base = t_core.fuse(t_sweep).removeSplitter()
     chamfer = Part.makeCone(
         t_radius + 2.0, t_r_inner,
         t_pitch / 2 + 1,
@@ -80,8 +80,7 @@ def construct_hinge_pin():
     
     head = head.cut(slot_cut).removeSplitter()
     
-    # Assemble Pin (NOTE: makeCompound, NOT fuse, to safely combine thread sweep and core!)
-    pin = Part.makeCompound([t_sweep, t_core, shaft, head])
+    pin = thread_base.fuse(shaft).fuse(head).removeSplitter()
     
     # Cut chamfer at the tip
     pin = pin.cut(chamfer_cut).removeSplitter()

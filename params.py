@@ -23,11 +23,11 @@ LEG_DEPTH            =   25.0 * SCALE   # outer depth
 LEG_WALL             =    3.0 * SCALE   # wall thickness
 SEGMENT_BODY_LENGTH  =  170.0 * SCALE
 
-# ─── Resistance-fit Peg joinery (Phase 2) ─────────────────────────────────────
-FIT_CLEARANCE        = 0.4 * SCALE
-# Peg dimensions are derived from the inner dimensions minus the clearance
-PEG_WIDTH            = LEG_WIDTH - (2 * LEG_WALL) - FIT_CLEARANCE
-PEG_DEPTH            = LEG_DEPTH - (2 * LEG_WALL) - FIT_CLEARANCE
+# ─── Threaded Cylindrical Peg joinery (Phase 2) ──────────────────────────────────
+# Inner cavity needs space for threaded peg
+# Thread nominal radius is less than inner dimension half
+PEG_THREAD_RADIUS    = ((LEG_WIDTH - 2*LEG_WALL) / 2) - 0.5 * SCALE
+PEG_THREAD_PITCH     = 4.0 * SCALE
 PEG_LENGTH           = 25.0 * SCALE
 
 # ─── Rod profile (drying rods share leg profile) ──────────────────────────────

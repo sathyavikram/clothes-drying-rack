@@ -20,7 +20,8 @@
 - Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
-- Structural connections rely on precise rectangular friction fits.
+- Structural connections for segments rely on male threaded cylindrical pegs and female threaded holes. The thread is timed so that when fully tightened, the outer rectangular profiles align seamlessly to form a uniform rod.
+- **CRITICAL Pattern for Sweeps/Threads**: Any `Part.Wire(helix).makePipeShell()` or complex extrusion must be generated at the origin (`App.Vector(0,0,0)`) wrapped in `Part.Solid()` and immediately fused to its core (`.fuse()`). Only *after* the threaded solid is finalized should it be repositioned using `.Placement` to interact with the main body. Creating sweeps off-origin results in disjoint bounding boxes and silent boolean (`.cut`) failures in OpenCASCADE.
 
 ## FDM Print Constraints
 
@@ -33,13 +34,15 @@
 | Min wall thickness | 3.0 mm (structural), 2.0 mm (cosmetic) |
 | Overhang rule | ≤ 45° without support |
 
-Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2}$) with integrated alignment friction-fit male/female peg joints.
+Long structural members (legs, rods) exceed the build plate and **must** be segmented into max 220 mm sub-parts (derived from $175\sqrt{2}$) with integrated threaded cylindrical male/female joint mechanisms.
 
 ## Fit Parameters (canonical — defined in `params.py`)
 
 | Parameter | Value |
 |---|---|
 | `FIT_CLEARANCE` | 0.4 mm (sliding/friction fits between pegs and bores) |
+| `PEG_THREAD_RADIUS` | Computed radius inside leg allowing wall clearance |
+| `PEG_THREAD_PITCH` | 4.0 mm base thread pitch for connections |
 | `THREAD_CLEARANCE` | 0.6 mm (shrinks male thread radius for post-print rotation) |
 | `GENERAL_CLEARANCE` | 0.4 mm (clearance holes for pins/shafts) |
 | `LEG_WIDTH` | 25.0 mm |
@@ -69,7 +72,7 @@ All values converted to mm from the reference images:
 clothes-drying-rack/
 ├── specs/                           ← project constitution (this folder)
 ├── params.py                        ← all dimensions + SCALE + paths 
-├── part_01_leg_segment.py           ← rectangular hollow segment, integrated friction-fit peg one side
+├── part_01_leg_segment.py           ← rectangular hollow segment, integrated threaded peg one side
 ├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
 ├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
 ├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)

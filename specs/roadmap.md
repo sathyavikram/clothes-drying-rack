@@ -23,8 +23,9 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 2 — Leg Segment (`part_01_leg_segment.py`) ✅
 - Rectangular hollow segment max length 220 mm (calculated as diagonal of 175x175mm bed minus length of pegs)
-- Integrated solid rectangular male peg at one end
-- Open hollow tube body acts as the native female receiver socket at the opposite end
+- Integrated solid cylindrical threaded male peg at one end
+- Integrated cylindrical threaded hole at the opposite end (acting as the female receiver socket)
+- Threading geometry is timed so that when segments are fully tightened, their outer rectangular profiles perfectly align to form a continuous visual rod. 
 - Print orientation: segment lying flat at 45° diagonal
 - Export STEP + STL; visual validation pass
 
@@ -35,7 +36,7 @@ Build, validate, and commit before moving to the next phase.
   - `part_02_xframe_hinge_bottom.py`: Bottom hinge bracket featuring a female M16 equivalent thread.
   - `part_03_xframe_hinge_top.py`: Top hinge bracket featuring a clearance bore.
   - `part_04_xframe_hinge_pin.py`: Male threaded locking pivot pin printed flat to ensure strong horizontal layer orientation.
-- Integrates seamlessly with X-frame rectangular leg segments
+- Integrates seamlessly with X-frame rectangular leg segments (using the threaded cylinder joinery timed for profile alignment)
 - Export STEP + STL; visual validation pass
 
 ---
@@ -50,7 +51,7 @@ Build, validate, and commit before moving to the next phase.
 
 ## Phase 5 — Main Top Drying Rod Segment (`part_06_main_rod.py`)
 - Rectangular hollow segment ≤ 220 mm for the uppermost horizontal rod
-- Male peg/female socket joinery to match legs
+- Male threaded peg / female threaded socket joinery to match legs
 - Export STEP + STL; visual validation pass
 
 ---
@@ -58,7 +59,7 @@ Build, validate, and commit before moving to the next phase.
 ## Phase 6 — Secondary & Lower Drying Rods (`part_07_secondary_rod.py`, `part_08_side_arm_rod.py`)
 - Secondary horizontal rod (mid-height, front face of rack)
 - Short retractable side arm rod (right side, lower)
-- Both segmented if > 220 mm; male peg/female socket joinery
+- Both segmented if > 220 mm; male threaded peg / female threaded socket joinery to match legs
 - Export STEP + STL each; visual validation pass
 
 ---

@@ -3,36 +3,36 @@
 ## Required Checks
 
 ### `part_01_leg_segment.py`
-1. **Headless build passes**
+- [x] Headless build passes
    ```bash
    ./run.sh part_01_leg_segment.py
    ```
    - No Python traceback. STEP + STL export lines present. `FreeCAD terminated.` last.
 
-2. **Export files exist**: `exports/part_01_leg_segment.step` and `.stl`, non-zero bytes.
+- [x] Export files exist: `exports/part_01_leg_segment.step` and `.stl`, non-zero bytes.
 
-3. **Volume sanity** — segment body:
+- [x] Volume sanity — segment body:
    - Printed `shape.Volume` must be non-zero and in the right order of magnitude.
 
-4. **Geometry visible**: rectangular peg stub present at one end, hollow interior forming a socket at the other end.
+- [x] Geometry visible: threaded cylindrical peg present at one end, threaded socket interior forming a receiver at the other end.
 
 ### `assembly.py`
-1. **Headless build passes**
+- [x] Headless build passes
    ```bash
    ./run.sh assembly
    ```
    - No Python traceback. STEP + STL export lines present.
 
-2. **Export files exist**: `exports/assembly.step` and `.stl`, non-zero bytes.
+- [x] Export files exist: `exports/assembly.step` and `.stl`, non-zero bytes.
 
-3. **Verify fit**:
-   - The leg segments slide straight into the open socket of the adjacent segment and align without overlap or gaps.
+- [x] Verify fit:
+   - The leg segments screw tightly into the threaded socket of the adjacent segment and align their outer profile perfectly upon bottoming out.
 
 ## Visual Validation via FreeCAD MCP
 - Invoke `freecad-visual-validation` agent for `part_01_leg_segment.py`.
-  - Report must return **PASS**.
+  - Report must return PASS.
 - Invoke `freecad-visual-validation` agent for `assembly.py`.
-  - Report must return **PASS**.
+  - Report must return PASS.
 
 ## Manual Review
 - Open each part in FreeCAD GUI and confirm:

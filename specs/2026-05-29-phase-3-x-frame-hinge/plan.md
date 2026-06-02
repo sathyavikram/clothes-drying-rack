@@ -5,9 +5,9 @@
 2. Define the exact dimensions for the fully printed threaded pin mechanism.
 
 ## 2. Base Body & Leg Cutouts
-1. Create `part_02_xframe_hinge_bottom.py` (Bottom piece with a female threaded socket) and `part_03_xframe_hinge_top.py` (Top piece with a smooth through-hole).
+1. Create `part_02_xframe_hinge_bottom.py` (Bottom piece with a female threaded socket for the pin) and `part_03_xframe_hinge_top.py` (Top piece with a smooth through-hole).
 2. Design the core block arms to encompass both legs at the cross pivot point.
-3. Apply boolean cuts using `LEG_WIDTH` and `LEG_DEPTH` (plus `FIT_CLEARANCE`) to form the sandwiching sockets. Add a rotational slot array for the stop mechanisms.
+3. Incorporate timed male threaded pegs and corresponding timed female threaded sockets along the arm segments for connecting natively to the Phase 2 threaded leg segments. Add a rotational slot array for the stop mechanisms.
 
 ## 3. Fully Printed Threaded Pivot Pin
 1. Create `part_04_xframe_hinge_pin.py`. Instead of a print-in-place mechanism, design an M16-equivalent threaded pin with a flat head.
