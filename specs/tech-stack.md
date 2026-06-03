@@ -76,15 +76,17 @@ clothes-drying-rack/
 ├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
 ├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
 ├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)
-├── part_05_top_bracket.py
-├── part_06_main_rod.py
-├── part_07_secondary_rod.py
-├── part_08_side_arm_rod.py
-├── part_09_stability_bar.py
-├── part_10_locking_hinge.py
-├── part_11_foot_cap.py
-├── part_12_rod_end_cap.py
-├── part_13_windproof_hook.py
+├── part_05_top_bracket_rod_mount.py ← top bracket rod mount (female threaded pivot)
+├── part_06_top_bracket_leg_mount.py ← top bracket leg mount (clearance bore)
+├── part_07_top_bracket_pin.py       ← top bracket pivot pin (male threads)
+├── part_08_main_rod.py
+├── part_09_secondary_rod.py
+├── part_10_side_arm_rod.py
+├── part_11_stability_bar.py
+├── part_12_locking_hinge.py
+├── part_13_foot_cap.py
+├── part_14_rod_end_cap.py
+├── part_15_windproof_hook.py
 ├── assembly.py
 ├── export_all.py
 ├── run.sh
