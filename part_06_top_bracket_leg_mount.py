@@ -25,18 +25,21 @@ def construct_leg_mount():
     HUB_H = 25.0 * params.SCALE
     ARM_EXT = 40.0 * params.SCALE
     
-    z_B = 0.0 # Printed flat on Z=0
-    hub_B = Part.makeCylinder(HUB_R, HUB_H, App.Vector(0,0,z_B), App.Vector(0,0,1))
-    body_B = Part.makeBox(LEG_W, ARM_EXT, LEG_D, App.Vector(-LEG_W/2, 0, z_B))
+    # Body centered on X and Y, extending from Z=0 to Z=ARM_EXT
+    body_B = Part.makeBox(LEG_W, LEG_D, ARM_EXT, App.Vector(-LEG_W/2, -LEG_D/2, 0))
+    
+    # Hub axis along Y, centered at X=0, Y=0, Z=ARM_EXT
+    # From Y = -HUB_H/2 to +HUB_H/2
+    hub_B = Part.makeCylinder(HUB_R, HUB_H, App.Vector(0, -HUB_H/2, ARM_EXT), App.Vector(0,1,0))
+    
     body_base = hub_B.fuse(body_B).removeSplitter()
     
+    # ─── FEMALE THREAD at Z=0 (accepting +Z male thread from Leg) ──────
     t_pitch   = params.PEG_THREAD_PITCH
     t_length  = params.PEG_LENGTH
     
-    # ─── FEMALE THREAD (Y = +ARM_EXT, pointing inward to -Y) ──────────────────
-    tf_radius  = params.PEG_THREAD_RADIUS  # Nominal
+    tf_radius  = params.PEG_THREAD_RADIUS
     tf_r_inner = tf_radius - (t_pitch * 0.45)
-    
     tf_length_cut = t_length + 2.0
     tf_total_len = tf_length_cut + t_pitch*2
     
@@ -54,26 +57,26 @@ def construct_leg_mount():
     sock_cutter_base = tf_core.fuse(tf_sweep).removeSplitter()
     
     sock_cutter = sock_cutter_base.copy()
-    tf_start_y = ARM_EXT + t_pitch
-    # +90 around X makes local +Z point to global -Y
-    sock_cutter.Placement = App.Placement(App.Vector(0, tf_start_y, LEG_D/2), App.Rotation(App.Vector(1,0,0), 90))
+    tf_start_z = 0 - t_pitch
+    sock_cutter.Placement.Base = App.Vector(0, 0, tf_start_z)
     
-    # Chamfer at female opening
     chamfer_f = Part.makeCone(
         tf_radius + 2.0, tf_radius - 2.0,
         4.0,
-        App.Vector(0, ARM_EXT + 2.0, LEG_D/2),
-        App.Vector(0,-1,0)
+        App.Vector(0, 0, -2.0)
     )
 
     body_base = body_base.cut(sock_cutter).cut(chamfer_f).removeSplitter()
     
-    # Center Hole for Pin (clearance fit)
+    # Center Hole for Pin (clearance fit) along Y axis
     hole_radius = 8.0 * params.SCALE + params.GENERAL_CLEARANCE
-    hole_B = Part.makeCylinder(hole_radius, HUB_H + 2.0, App.Vector(0,0,z_B - 1.0), App.Vector(0,0,1))
+    hole_B = Part.makeCylinder(hole_radius, HUB_H + 2.0, App.Vector(0, -HUB_H/2 - 1.0, ARM_EXT), App.Vector(0,1,0))
     
     shape = body_base.cut(hole_B).removeSplitter()
-    
+
+    # Print orientation: lie flat on a long face (e.g. Y face)
+    shape.Placement.Rotation = App.Rotation(App.Vector(1,0,0), 90)
+
     os.makedirs(EXPORT_BASE, exist_ok=True)
     for path in (EXPORT_STEP, EXPORT_STL):
         if os.path.exists(path):

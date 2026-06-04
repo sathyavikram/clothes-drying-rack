@@ -26,11 +26,14 @@ def construct_rod_mount():
     HUB_H = 25.0 * params.SCALE
     ARM_EXT = 40.0 * params.SCALE
     
-    z_A = 0.0
-    hub_A = Part.makeCylinder(HUB_R, HUB_H, App.Vector(0,0,z_A), App.Vector(0,0,1))
-    body_A = Part.makeBox(LEG_W, ARM_EXT, LEG_D, App.Vector(-LEG_W/2, 0, z_A))
+    # Hub at (0,0,0) along Y axis
+    hub_A = Part.makeCylinder(HUB_R, HUB_H, App.Vector(0, -HUB_H/2, 0), App.Vector(0,1,0))
+    # Arm extends along +Z from Z=0 to Z=ARM_EXT
+    body_A = Part.makeBox(LEG_W, LEG_D, ARM_EXT, App.Vector(-LEG_W/2, -LEG_D/2, 0))
     
-    # ─── MALE THREAD (Top, Y = +ARM_EXT) ──────────────────────────────────────
+    body_base = hub_A.fuse(body_A).removeSplitter()
+    
+    # ─── MALE THREAD at Top (Z = ARM_EXT) ──────────────────────────────────────
     t_pitch   = params.PEG_THREAD_PITCH
     t_length  = params.PEG_LENGTH
     
@@ -46,36 +49,33 @@ def construct_rod_mount():
     p4 = App.Vector(inner_X_m,  0,  t_pitch * 0.35)
     tm_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
     
-    tm_sweep = Part.Wire(tm_helix).makePipeShell([tm_wire], True, True)
+    tm_sweep = Part.Solid(Part.Wire(tm_helix).makePipeShell([tm_wire], True, True))
     tm_core = Part.makeCylinder(tm_r_inner, t_length, App.Vector(0, 0, 0))
     
     male_thread_base = tm_core.fuse(tm_sweep).removeSplitter()
     male_thread = male_thread_base.copy()
-    male_thread.Placement = App.Placement(App.Vector(0, ARM_EXT, LEG_D/2), App.Rotation(App.Vector(1,0,0), -90))
+    male_thread.Placement = App.Placement(App.Vector(0, 0, ARM_EXT), App.Rotation(0,0,0,1))
     
     chamfer_m = Part.makeCone(
         tm_radius + 2.0, tm_r_inner,
         t_pitch / 2 + 1,
-        App.Vector(0, ARM_EXT + t_length - t_pitch / 2 - 1, LEG_D/2),
-        App.Vector(0,1,0)
+        App.Vector(0, 0, ARM_EXT + t_length - t_pitch / 2 - 1)
     )
     end_cutter_m = Part.makeCylinder(
         tm_radius + 5.0, t_pitch + 2.0,
-        App.Vector(0, ARM_EXT + t_length - 1, LEG_D/2),
-        App.Vector(0,1,0)
+        App.Vector(0, 0, ARM_EXT + t_length - 1)
     )
     
-    male_peg = male_thread.cut(end_cutter_m.cut(chamfer_m)).removeSplitter()
+    male_peg_clean = male_thread.cut(end_cutter_m.cut(chamfer_m)).removeSplitter()
     
-    body_base = hub_A.fuse(body_A).removeSplitter()
-    
-    # ─── Pivot Thread Cutter (Female inside the hub) ──────────────────────────────
+    # ─── Pivot Thread Cutter (Female inside the hub) ──────────────────────────
     p_pitch   = 4.0 * params.SCALE
-    p_radius  = 8.0 * params.SCALE          # nominal — NO clearance reduction
+    p_radius  = 8.0 * params.SCALE
     p_r_inner = p_radius - (p_pitch * 0.45)
     
-    start_z = 3.0 * params.SCALE
-    p_length  = HUB_H - start_z + 1.0 
+    # Starts from Y = +HUB_H/2 (since part_05 is at -Y relative to part_06)
+    start_y = HUB_H/2 + p_pitch
+    p_length  = 19.0 + p_pitch * 2.0 
     
     p_helix = Part.makeHelix(p_pitch, p_length, p_r_inner, 0)
     
@@ -86,25 +86,26 @@ def construct_rod_mount():
     p_4 = App.Vector(inner_X_p,  0,  p_pitch * 0.35)
     p_wire = Part.Wire(Part.makePolygon([p_1, p_2, p_3, p_4, p_1]))
 
-    p_sweep = Part.Wire(p_helix).makePipeShell([p_wire], True, True)
-    p_core  = Part.makeCylinder(p_r_inner, p_length + 2.0, App.Vector(0, 0, -1.0))
+    p_sweep = Part.Solid(Part.Wire(p_helix).makePipeShell([p_wire], True, True))
+    p_core  = Part.makeCylinder(p_r_inner, p_length, App.Vector(0, 0, 0))
     
     pivot_cutter_base = p_core.fuse(p_sweep).removeSplitter()
     pivot_cutter = pivot_cutter_base.copy()
-    pivot_cutter.Placement.Base = App.Vector(0, 0, start_z)
-
-    bottom_trimmer = Part.makeBox(100.0, 100.0, 100.0, App.Vector(-50.0, -50.0, -100.0 + start_z))
-    pivot_cutter = pivot_cutter.cut(bottom_trimmer).removeSplitter()
     
-    pivot_chamfer = Part.makeCone(p_radius+1.0, p_radius-1.0, 2.0, App.Vector(0,0,HUB_H-2.0))
+    # Rotate from +Z to -Y: +90 around X sends +Z to -Y
+    pivot_cutter.Placement = App.Placement(App.Vector(0, start_y, 0), App.Rotation(App.Vector(1,0,0), 90))
+    
+    # Chamfer at entry (Y = -HUB_H/2)
+    pivot_chamfer = Part.makeCone(p_radius+1.0, p_radius-1.0, 2.0, App.Vector(0, -HUB_H/2 + 2.0, 0), App.Vector(0,-1,0))
     pivot_cutter = pivot_cutter.fuse(pivot_chamfer).removeSplitter()
 
-    # Cut pivot thread into arm
+    # Cut pivot thread into body
     shape_cut = body_base.cut(pivot_cutter).removeSplitter()
     
-    shape = Part.makeCompound([shape_cut, male_peg])
+    shape = Part.makeCompound([shape_cut, male_peg_clean])
     
-    # Print orientation: Z is UP, it lies flat on the bottom of the hub.
+    # Print orientation: lie flat on Y face
+    shape.Placement.Rotation = App.Rotation(App.Vector(1,0,0), 90)
     
     os.makedirs(EXPORT_BASE, exist_ok=True)
     for path in (EXPORT_STEP, EXPORT_STL):
