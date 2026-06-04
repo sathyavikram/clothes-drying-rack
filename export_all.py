@@ -1,24 +1,50 @@
+#!/usr/bin/env python
 import os
 import subprocess
+import sys
 
-CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPTS = [
+    "part_01_leg_segment.py",
+    "part_02_xframe_hinge_bottom.py",
+    "part_03_xframe_hinge_top.py",
+    "part_04_xframe_hinge_pin.py",
+    "part_05_top_bracket_rod_mount.py",
+    "part_06_top_bracket_leg_mount.py",
+    "part_07_top_bracket_pin.py",
+    "assembly.py"
+]
+
 FREECAD_CMD = "/Applications/FreeCAD.app/Contents/Resources/bin/freecadcmd"
+if not os.path.exists(FREECAD_CMD):
+    FREECAD_CMD = "freecadcmd"
 
-def build():
-    print(f"Building leg segment...")
-    subprocess.run([FREECAD_CMD, "-c", "import sys; sys.path.append('.'); import part_01_leg_segment; part_01_leg_segment.main()"], cwd=CURRENT_DIR)
-
-    print(f"Building hinge bottom...")
-    subprocess.run([FREECAD_CMD, "-c", "import sys; sys.path.append('.'); import part_02_xframe_hinge_bottom; part_02_xframe_hinge_bottom.main()"], cwd=CURRENT_DIR)
-
-    print(f"Building hinge top...")
-    subprocess.run([FREECAD_CMD, "-c", "import sys; sys.path.append('.'); import part_03_xframe_hinge_top; part_03_xframe_hinge_top.main()"], cwd=CURRENT_DIR)
-
-    print(f"Building hinge pin...")
-    subprocess.run([FREECAD_CMD, "-c", "import sys; sys.path.append('.'); import part_04_xframe_hinge_pin; part_04_xframe_hinge_pin.main()"], cwd=CURRENT_DIR)
+def main():
+    print(f"Starting batched export of {len(SCRIPTS)} scripts...")
+    success_count = 0
     
-    print(f"Building assembly...")
-    subprocess.run([FREECAD_CMD, "-c", "import sys; sys.path.append('.'); import assembly; assembly.build_assembly()"], cwd=CURRENT_DIR)
-
+    for script in SCRIPTS:
+        if not os.path.exists(script):
+            print(f"Warning: {script} not found. Skipping.")
+            continue
+            
+        print(f"\n--- Running {script} ---")
+        try:
+            result = subprocess.run([FREECAD_CMD, script], capture_output=True, text=True)
+            output = result.stdout + "\n" + result.stderr
+            
+            for line in output.split('\n'):
+                if "Exported to" in line or "Error" in line or "Exception" in line or "Traceback" in line:
+                    print(line)
+            
+            if result.returncode == 0 and "Traceback" not in output:
+                success_count += 1
+            else:
+                print(f"!!! Error detected in {script}")
+                
+        except Exception as e:
+            print(f"Failed to execute {script}: {e}")
+            
+    print(f"\nFinished. {success_count}/{len(SCRIPTS)} scripts executed successfully.")
+    
 if __name__ == "__main__":
-    build()
+    main()
