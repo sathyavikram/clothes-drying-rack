@@ -115,28 +115,46 @@ def build_assembly():
     add_part_to_doc(doc, leg_b_bot, "Leg_B_Bottom", color_leg_2)
     
     # ─── PHASE 4 T-Bracket at the top of Leg_B_Top ───
-    # We position the T-Bracket at the end of Leg_B_Top.
-    # We will just visually position it in space next to the assembly to show its relative geometry
+    # The shoulder of leg_b_top is at Y = 125 + 85 = 210 in the leg's unrotated frame.
+    # We place the T-Bracket leg mount (part_06) such that its socket perfectly receives the leg's peg.
+    # part_06 socket is at Y = 40 (ARM_EXT) and faces -Y. So we rotate part_06 by 180 deg around Z.
     
-    offset_x = 100
-    offset_y = 200
-    offset_z = 0
-    t_disp = App.Placement(App.Vector(offset_x, offset_y, offset_z), App.Rotation(0,0,0,1))
+    pivot_y = 210.0 + 40.0 # 250.0
+    t_z_offset = leg_d_half + arm_b_z
     
-    rod_mount = load_step("part_05_top_bracket_rod_mount.step")
-    rod_mount_p = rod_mount.copy()
-    rod_mount_p.Placement = t_disp.multiply(rod_mount.Placement)
-    add_part_to_doc(doc, rod_mount_p, "TBracket_RodMount", (0.3, 0.8, 0.3))
+    # Position of part 06 in the unrotated leg_b local frame
+    p6_local = App.Placement(App.Vector(0, pivot_y, t_z_offset), App.Rotation(App.Vector(0,0,1), 180))
+    # Apply rot_65 to map to world leg_b_top frame
+    p6_world = rot_65.multiply(p6_local)
     
     leg_mount = load_step("part_06_top_bracket_leg_mount.step")
     leg_mount_p = leg_mount.copy()
-    t_z = App.Placement(App.Vector(0,0,25.4), App.Rotation(0,0,0,1))
-    leg_mount_p.Placement = t_disp.multiply(t_z.multiply(leg_mount.Placement))
-    add_part_to_doc(doc, leg_mount_p, "TBracket_LegMount_Deployed", (0.3, 0.6, 0.8))
+    leg_mount_p.Placement = p6_world
+    add_part_to_doc(doc, leg_mount_p, "TBracket_LegMount", (0.3, 0.6, 0.8))
     
+    # Position of part 05 (Rod Mount) in the unrotated leg_b local frame
+    # It sits 25.4mm below part_06 (at Z = leg_d_half). We'll set it deployed (e.g. 45 degrees relative to leg).
+    rot_deployed = App.Rotation(App.Vector(0,0,1), 45)
+    p5_local = App.Placement(App.Vector(0, pivot_y, leg_d_half), rot_deployed.multiply(App.Rotation(App.Vector(0,0,1), 180)))
+    p5_world = rot_65.multiply(p5_local)
+    
+    rod_mount = load_step("part_05_top_bracket_rod_mount.step")
+    rod_mount_p = rod_mount.copy()
+    rod_mount_p.Placement = p5_world
+    add_part_to_doc(doc, rod_mount_p, "TBracket_RodMount", (0.3, 0.8, 0.3))
+    
+    # Position of part 07 (Pin)
+    # The pin native export lies flat. Rotate it upright, then move into position.
+    unrot_flat = App.Placement(App.Vector(0, -16.0, 0), App.Rotation(App.Vector(1,0,0), -90))
+    shift_z = App.Placement(App.Vector(0, 0, 4.4), App.Rotation(0,0,0,1)) # 4.4mm is pin cap shift
     t_pin = load_step("part_07_top_bracket_pin.step")
     t_pin_p = t_pin.copy()
-    t_pin_p.Placement = t_disp.multiply(shift_z.multiply(unrot_flat.multiply(t_pin.Placement)))
+    
+    # Position the pivot exactly at (0, 250, leg_d_half) then apply world transform
+    pin_local = App.Placement(App.Vector(0, pivot_y, leg_d_half), App.Rotation(0,0,0,1))
+    pin_world = rot_65.multiply(pin_local)
+    
+    t_pin_p.Placement = pin_world.multiply(shift_z.multiply(unrot_flat.multiply(t_pin.Placement)))
     add_part_to_doc(doc, t_pin_p, "TBracket_Pin", color_pin)
 
     # Export Assembly
