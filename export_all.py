@@ -29,7 +29,14 @@ def main():
             
         print(f"\n--- Running {script} ---")
         try:
-            result = subprocess.run([FREECAD_CMD, script], capture_output=True, text=True)
+            # Execute exactly how run.sh would execute them to ensure __main__ issues are bypassed
+            # run.sh handles calling the .main() or .build_assembly() proper hook
+            script_arg = script
+            if script == "assembly.py":
+                script_arg = "assembly"
+                
+            cmd = ["./run.sh", script_arg]
+            result = subprocess.run(cmd, capture_output=True, text=True)
             output = result.stdout + "\n" + result.stderr
             
             for line in output.split('\n'):
