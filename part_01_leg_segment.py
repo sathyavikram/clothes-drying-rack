@@ -44,15 +44,15 @@ def construct_leg_segment():
     
     # ─── MALE THREAD (Top, Z = +l/2) ──────────────────────────────────────────
     tm_radius  = params.PEG_THREAD_RADIUS - params.THREAD_CLEARANCE
-    tm_r_inner = tm_radius - (t_pitch * 0.45)
+    tm_r_inner = tm_radius - (t_pitch * 0.55)
     
     tm_helix = Part.makeHelix(t_pitch, t_length, tm_r_inner, 0)
     
-    inner_X_m = tm_r_inner - 2.0 * params.SCALE
-    p1 = App.Vector(inner_X_m,  0, -t_pitch * 0.35)
-    p2 = App.Vector(tm_radius, 0, -t_pitch * 0.10)
-    p3 = App.Vector(tm_radius, 0,  t_pitch * 0.10)
-    p4 = App.Vector(inner_X_m,  0,  t_pitch * 0.35)
+    inner_X_m = tm_r_inner - 0.5 * params.SCALE
+    p1 = App.Vector(inner_X_m,  0, -t_pitch * 0.45)
+    p2 = App.Vector(tm_radius, 0, -t_pitch * 0.15)
+    p3 = App.Vector(tm_radius, 0,  t_pitch * 0.15)
+    p4 = App.Vector(inner_X_m,  0,  t_pitch * 0.45)
     tm_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
     
     tm_sweep = Part.Solid(Part.Wire(tm_helix).makePipeShell([tm_wire], True, True))
@@ -71,8 +71,8 @@ def construct_leg_segment():
         App.Vector(0, 0, l/2 + t_length - 1)
     )
     
-    male_thread_base = tm_core.fuse(tm_sweep).removeSplitter()
-    male_peg = male_thread_base.cut(end_cutter_m.cut(chamfer_m)).removeSplitter()
+    male_thread_base = tm_core.fuse(tm_sweep)
+    male_peg = male_thread_base.cut(end_cutter_m.cut(chamfer_m))
     
     # Do NOT use fuse for the male peg to avoid OpenCASCADE locking up. Instead use makeCompound.
     # Wait! If we output a compound, subsequent cuts might be weird, but here we can just create the final body.
@@ -80,7 +80,7 @@ def construct_leg_segment():
     
     # ─── FEMALE THREAD (Bottom, Z = -l/2) ────────────────────────────────────
     tf_radius  = params.PEG_THREAD_RADIUS  # Nominal
-    tf_r_inner = tf_radius - (t_pitch * 0.45)
+    tf_r_inner = tf_radius - (t_pitch * 0.55)
     
     tf_length_cut = t_length + 2.0
     tf_start_z = -l/2 - t_pitch
@@ -88,22 +88,24 @@ def construct_leg_segment():
     
     tf_helix = Part.makeHelix(t_pitch, tf_total_len, tf_r_inner, 0)
     
-    inner_X_f = tf_r_inner - 2.0 * params.SCALE
-    f1 = App.Vector(inner_X_f,  0, -t_pitch * 0.35)
-    f2 = App.Vector(tf_radius, 0, -t_pitch * 0.10)
-    f3 = App.Vector(tf_radius, 0,  t_pitch * 0.10)
-    f4 = App.Vector(inner_X_f,  0,  t_pitch * 0.35)
-    tf_wire = Part.Wire(Part.makePolygon([f1, f2, f3, f4, f1]))
+    # Bug fix: makePipeShell with Frenet=True shifts the profile by the helix radius. 
+    # Therefore the 2D profile MUST be centered at X=0, not X=tf_r_inner.
+    inner_X_f = tf_r_inner - 0.5 * params.SCALE
+    pf1 = App.Vector(inner_X_f,  0, -t_pitch * 0.45)
+    pf2 = App.Vector(tf_radius, 0, -t_pitch * 0.15)
+    pf3 = App.Vector(tf_radius, 0,  t_pitch * 0.15)
+    pf4 = App.Vector(inner_X_f,  0,  t_pitch * 0.45)
+    tf_wire = Part.Wire(Part.makePolygon([pf1, pf2, pf3, pf4, pf1]))
     
     tf_sweep = Part.Solid(Part.Wire(tf_helix).makePipeShell([tf_wire], True, True))
     tf_core  = Part.makeCylinder(tf_r_inner, tf_total_len, App.Vector(0, 0, 0))
-    thread_cutter_base = tf_core.fuse(tf_sweep).removeSplitter()
+    thread_cutter_base = tf_core.fuse(tf_sweep)
     
     thread_cutter = thread_cutter_base.copy()
     thread_cutter.Placement.Base = App.Vector(0, 0, tf_start_z)
     
     # Cut female socket into main body
-    body2 = body.cut(thread_cutter).removeSplitter()
+    body2 = body.cut(thread_cutter)
     body = body2
     
     
@@ -113,7 +115,7 @@ def construct_leg_segment():
         4.0,
         App.Vector(0, 0, -l/2 - 2.0)
     )
-    body = body.cut(chamfer_f).removeSplitter()
+    body = body.cut(chamfer_f)
     
     # Now combine the male peg
     shape = Part.makeCompound([body, male_peg])

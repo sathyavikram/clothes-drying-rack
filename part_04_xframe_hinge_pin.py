@@ -21,7 +21,7 @@ def construct_hinge_pin():
     # Pin parameters
     t_pitch   = 4.0 * params.SCALE
     t_radius  = 8.0 * params.SCALE - params.THREAD_CLEARANCE
-    t_r_inner = t_radius - (t_pitch * 0.45)
+    t_r_inner = t_radius - (t_pitch * 0.55)
     
     # 25.0 Hub height. Make thread 19mm long so it has clearance from the 3mm floor.
     t_length  = 19.0 * params.SCALE
@@ -36,17 +36,17 @@ def construct_hinge_pin():
     # ─── Threaded shaft ──────────────────────────────────────
     t_helix = Part.makeHelix(t_pitch, t_length, t_r_inner, 0)
     
-    inner_X = t_r_inner - 2.0 * params.SCALE
-    p1 = App.Vector(inner_X,  0, -t_pitch * 0.35)
-    p2 = App.Vector(t_radius, 0, -t_pitch * 0.10)
-    p3 = App.Vector(t_radius, 0,  t_pitch * 0.10)
-    p4 = App.Vector(inner_X,  0,  t_pitch * 0.35)
+    inner_X = t_r_inner - 0.5 * params.SCALE
+    p1 = App.Vector(inner_X,  0, -t_pitch * 0.45)
+    p2 = App.Vector(t_radius, 0, -t_pitch * 0.15)
+    p3 = App.Vector(t_radius, 0,  t_pitch * 0.15)
+    p4 = App.Vector(inner_X,  0,  t_pitch * 0.45)
     t_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
 
     t_sweep = Part.Solid(Part.Wire(t_helix).makePipeShell([t_wire], True, True))
     t_core  = Part.makeCylinder(t_r_inner, t_length, App.Vector(0, 0, 0))
     
-    thread_base = t_core.fuse(t_sweep).removeSplitter()
+    thread_base = t_core.fuse(t_sweep)
     chamfer = Part.makeCone(
         t_radius + 2.0, t_r_inner,
         t_pitch / 2 + 1,
@@ -79,12 +79,12 @@ def construct_hinge_pin():
     slot_d = 2.0 * params.SCALE
     slot_cut = Part.makeBox(head_radius * 2 + 2, slot_w, slot_d + 1, App.Vector(-head_radius - 1, -slot_w/2, z_head + head_len - slot_d))
     
-    head = head.cut(slot_cut).removeSplitter()
+    head = head.cut(slot_cut)
     
-    pin = thread_base.fuse(shaft).fuse(head).removeSplitter()
+    pin = thread_base.fuse(shaft).fuse(head)
     
     # Cut chamfer at the tip
-    pin = pin.cut(chamfer_cut).removeSplitter()
+    pin = pin.cut(chamfer_cut)
     
     # Print orientation: rotation is critical. We must rotate it 90 degrees around X
     # so the long axis is flat on the build plate (Z=0)
@@ -97,7 +97,7 @@ def construct_hinge_pin():
     # The pin center is now at Z=head_radius. The bottom is at Z=0.
     # Let's cut from Z=-10 to Z=1.0 to give it a 1mm flat.
     flat_cut = Part.makeBox(100, 100, 10, App.Vector(-50, -100, -10 + 1.0))
-    pin = pin.cut(flat_cut).removeSplitter()
+    pin = pin.cut(flat_cut)
     
     os.makedirs(EXPORT_BASE, exist_ok=True)
     for path in (EXPORT_STEP, EXPORT_STL):

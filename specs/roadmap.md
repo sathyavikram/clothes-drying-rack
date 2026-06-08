@@ -41,67 +41,59 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 4 — Top L-Connector Bracket ✅
-- Implemented `part_05_top_t_bracket.py` (updated to L-shape): a single-piece rigid L-shaped bracket connecting the top of the X-frame leg to the main horizontal drying rod.
-- **Body geometry**: 2D L-shaped profile (two arms of 45 mm each, matching `LEG_WIDTH = 25 mm` square cross-section × `LEG_DEPTH = 25 mm` extrusion depth) extruded with 2 mm fillets on all edges; inner corner chamfered (4 mm) to avoid a stress riser at the junction.
-- **Print orientation**: Part lies flat in the XY plane; Z-thickness equals `LEG_DEPTH` (25 mm). Both threaded features print horizontally, consistent with leg segment convention.
-- **Symmetric Arms**: Both arms (45 mm each) feature identical standard timed female threaded blind sockets (radius = `PEG_THREAD_RADIUS`, chamfered lead-in). This symmetrical design allows the bracket to fit in either direction to the X-frame leg or the horizontal rod.
-- **Assembly placement** (`assembly.py`): Bracket positioned at the top of Leg B arm using a mathematical rotation matrix derived from the 65° X-frame deployed angle; translation vector computed so one female socket mouth meets the leg peg tip exactly.
+## Phase 4 — Universal Modular T-Bracket ✅
+- Implemented `part_05_top_t_bracket.py` (updated to Universal T-Bracket): a single-piece rigid T-shaped bracket connecting X-frame legs to horizontal drying rods.
+- **Body geometry**: 2D T-shaped profile (three arms of 45 mm each, matching `LEG_WIDTH = 25 mm` square cross-section × `LEG_DEPTH = 25 mm` extrusion depth) extruded with 2 mm fillets on all edges; inner corners chamfered (4 mm) to avoid stress risers at the junctions.
+- **Print orientation**: Part lies flat in the XY plane; Z-thickness equals `LEG_DEPTH` (25 mm). All three threaded features print horizontally, consistent with leg segment convention.
+- **Universal Sockets**: All three arms (Top, Bottom, Side) feature identical standard timed female threaded blind sockets (radius = `PEG_THREAD_RADIUS`). This modular design allows the bracket to fit anywhere: inline between two leg segments, or capping the top of the rack.
+- **Assembly placement** (`assembly.py`): Bracket positioned at leg joints using a mathematical rotation matrix derived from the 65° X-frame deployed angle. The bottom socket receives the leg peg from below, the side socket receives the horizontal rod, and the top socket can receive an adapter pin to continue the leg vertically.
 - Export `part_05_top_t_bracket.step` + `.stl`; integrated into `assembly.step`; visual validation pass.
 
 ---
 
-## Phase 5 — Main Top Drying Rod Segment (`part_08_main_rod.py`)
-- Rectangular hollow segment ≤ 220 mm for the uppermost horizontal rod
-- Male threaded peg / female threaded socket joinery to match legs
-- Export STEP + STL; visual validation pass
-
----
-
-## Phase 6 — Secondary & Lower Drying Rods (`part_09_secondary_rod.py`, `part_10_side_arm_rod.py`)
-- Secondary horizontal rod (mid-height, front face of rack)
-- Short retractable side arm rod (right side, lower)
-- Both segmented if > 220 mm; male threaded peg / female threaded socket joinery to match legs
+## Phase 5 — Universal Drying Rod & Adapter Pin (`part_06_drying_rod.py`, `part_07_threaded_adapter_pin.py`)
+- **Universal Drying Rod** (`part_06_drying_rod.py`): Stadium profile (pill shape) hollow segment ≤ 220 mm, transitioning to square ends. Uses male threaded peg / female threaded socket joinery. This exact part will be reused for the main top rod, secondary mid-height rod, and side arm rod.
+- **Threaded Adapter Pin** (`part_07_threaded_adapter_pin.py`): A short male-to-male threaded adapter pin used to connect two female sockets (e.g., joining the right end of a rod assembly to a T-bracket, or connecting a T-bracket's top socket to the next Leg segment).
 - Export STEP + STL each; visual validation pass
 
 ---
 
-## Phase 7 — Middle Stability Bar (`part_11_stability_bar.py`)
+## Phase 6 — Middle Stability Bar (`part_08_stability_bar.py`)
 - Short horizontal bar spanning between the two X-frame assemblies at mid-height
 - Fits within build plate (no segmentation needed)
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 8 — Locking Hinge Body (`part_12_locking_hinge.py`)
+## Phase 7 — Locking Hinge Body (`part_09_locking_hinge.py`)
 - Flat rectangular plate with two pivot holes and a locking notch/detent
 - Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 9 — Anti-Slip Foot Cap (`part_13_foot_cap.py`)
+## Phase 8 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
 - Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 10 — Rod End Cap (`part_14_rod_end_cap.py`)
-- Small rectangular plug that caps the open ends of rectangular drying rods
+## Phase 9 — Rod End Cap (`part_11_rod_end_cap.py`)
+- Small stadium profile (pill shape) plug that caps the open ends of the drying rods
 - Press-fit with tight tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 11 — Windproof Hook (`part_15_windproof_hook.py`)
-- Small J-hook accessory that clips onto the rectangular drying rod
-- Clip opening matches rod dimensions + tolerance
+## Phase 10 — Windproof Hook (`part_12_windproof_hook.py`)
+- Small J-hook accessory that clips onto the stadium-profile drying rod
+- Clip opening matches stadium profile dimensions + tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 12 — Full Assembly (`assembly.py`)
+## Phase 11 — Full Assembly (`assembly.py`)
 - Clears `exports/`; regenerates all parts
 - Loads every STEP file; positions all instances
 - 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps
@@ -110,7 +102,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 13 — Final Export & Validation
+## Phase 12 — Final Export & Validation
 - Run `export_all.py` — confirm N/N parts exported
 - Select and render final assembly image
 - Tag release commit

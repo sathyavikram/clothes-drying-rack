@@ -27,7 +27,7 @@ SEGMENT_BODY_LENGTH  =  170.0 * SCALE
 # Inner cavity needs space for threaded peg
 # Thread nominal radius is less than inner dimension half
 PEG_THREAD_RADIUS    = ((LEG_WIDTH - 2*LEG_WALL) / 2) - 0.5 * SCALE
-PEG_THREAD_PITCH     = 4.0 * SCALE
+PEG_THREAD_PITCH     = 6.0 * SCALE
 PEG_LENGTH           = 25.0 * SCALE
 
 # ─── Rod profile (drying rods share leg profile) ──────────────────────────────

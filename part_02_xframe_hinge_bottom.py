@@ -36,21 +36,21 @@ def construct_hinge_bottom():
     t_length  = params.PEG_LENGTH
     
     tm_radius  = params.PEG_THREAD_RADIUS - params.THREAD_CLEARANCE
-    tm_r_inner = tm_radius - (t_pitch * 0.45)
+    tm_r_inner = tm_radius - (t_pitch * 0.55)
     
     tm_helix = Part.makeHelix(t_pitch, t_length, tm_r_inner, 0)
     
-    inner_X_m = tm_r_inner - 2.0 * params.SCALE
-    p1 = App.Vector(inner_X_m,  0, -t_pitch * 0.35)
-    p2 = App.Vector(tm_radius, 0, -t_pitch * 0.10)
-    p3 = App.Vector(tm_radius, 0,  t_pitch * 0.10)
-    p4 = App.Vector(inner_X_m,  0,  t_pitch * 0.35)
+    inner_X_m = tm_r_inner - 0.5 * params.SCALE
+    p1 = App.Vector(inner_X_m,  0, -t_pitch * 0.45)
+    p2 = App.Vector(tm_radius, 0, -t_pitch * 0.15)
+    p3 = App.Vector(tm_radius, 0,  t_pitch * 0.15)
+    p4 = App.Vector(inner_X_m,  0,  t_pitch * 0.45)
     tm_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
     
     tm_sweep = Part.Wire(tm_helix).makePipeShell([tm_wire], True, True)
     tm_core = Part.makeCylinder(tm_r_inner, t_length, App.Vector(0, 0, 0))
     
-    male_thread_base = tm_core.fuse(tm_sweep).removeSplitter()
+    male_thread_base = tm_core.fuse(tm_sweep)
     male_thread = male_thread_base.copy()
     male_thread.Placement = App.Placement(App.Vector(0, ARM_EXT, LEG_D/2), App.Rotation(App.Vector(1,0,0), -90))
     
@@ -66,11 +66,11 @@ def construct_hinge_bottom():
         App.Vector(0,1,0)
     )
     
-    male_peg = male_thread.cut(end_cutter_m.cut(chamfer_m)).removeSplitter()
+    male_peg = male_thread.cut(end_cutter_m.cut(chamfer_m))
     
     # ─── FEMALE THREAD (Bottom, Y = -ARM_EXT) ──────────────────────────────────
     tf_radius  = params.PEG_THREAD_RADIUS  # Nominal
-    tf_r_inner = tf_radius - (t_pitch * 0.45)
+    tf_r_inner = tf_radius - (t_pitch * 0.55)
     
     tf_length_cut = t_length + 2.0
     tf_start_y = -ARM_EXT - t_pitch 
@@ -78,16 +78,16 @@ def construct_hinge_bottom():
     
     tf_helix = Part.makeHelix(t_pitch, tf_total_len, tf_r_inner, 0)
     
-    f1 = App.Vector(inner_X_m,  0, -t_pitch * 0.35)
-    f2 = App.Vector(tf_radius, 0, -t_pitch * 0.10)
-    f3 = App.Vector(tf_radius, 0,  t_pitch * 0.10)
-    f4 = App.Vector(inner_X_m,  0,  t_pitch * 0.35)
+    f1 = App.Vector(inner_X_m,  0, -t_pitch * 0.45)
+    f2 = App.Vector(tf_radius, 0, -t_pitch * 0.15)
+    f3 = App.Vector(tf_radius, 0,  t_pitch * 0.15)
+    f4 = App.Vector(inner_X_m,  0,  t_pitch * 0.45)
     tf_wire = Part.Wire(Part.makePolygon([f1, f2, f3, f4, f1]))
     
     tf_sweep = Part.Wire(tf_helix).makePipeShell([tf_wire], True, True)
     tf_core  = Part.makeCylinder(tf_r_inner, tf_total_len, App.Vector(0, 0, 0))
     
-    sock_cutter_base = tf_core.fuse(tf_sweep).removeSplitter()
+    sock_cutter_base = tf_core.fuse(tf_sweep)
     sock_cutter = sock_cutter_base.copy()
     sock_cutter.Placement = App.Placement(App.Vector(0, tf_start_y, LEG_D/2), App.Rotation(App.Vector(1,0,0), -90))
     
@@ -102,45 +102,45 @@ def construct_hinge_bottom():
     # Stop Peg for the hinge mechanism itself
     stop_peg_A = Part.makeCylinder(3.6, 4.0, App.Vector(14.0 * params.SCALE, 0, HUB_H), App.Vector(0,0,1))
     
-    body_base = hub_A.fuse(body_A).removeSplitter()
+    body_base = hub_A.fuse(body_A)
     body_base = body_base.makeFillet(2.0 * params.SCALE, body_base.Edges)
-    body_base = body_base.fuse(stop_peg_A).removeSplitter()
+    body_base = body_base.fuse(stop_peg_A)
     
     # Apply segment joints
-    body_base = body_base.cut(sock_cutter).cut(chamfer_f).removeSplitter()
+    body_base = body_base.cut(sock_cutter).cut(chamfer_f)
     
     # ─── Pivot Thread Cutter (Female inside the hub) ──────────────────────────────
     p_pitch   = 4.0 * params.SCALE
     p_radius  = 8.0 * params.SCALE          # nominal — NO clearance reduction
-    p_r_inner = p_radius - (p_pitch * 0.45)
+    p_r_inner = p_radius - (p_pitch * 0.55)
     
     start_z = 3.0 * params.SCALE
     p_length  = HUB_H - start_z + 1.0 
     
     p_helix = Part.makeHelix(p_pitch, p_length, p_r_inner, 0)
     
-    inner_X_p = p_r_inner - 2.0 * params.SCALE
-    p_1 = App.Vector(inner_X_p,  0, -p_pitch * 0.35)
-    p_2 = App.Vector(p_radius, 0, -p_pitch * 0.10)
-    p_3 = App.Vector(p_radius, 0,  p_pitch * 0.10)
-    p_4 = App.Vector(inner_X_p,  0,  p_pitch * 0.35)
+    inner_X_p = p_r_inner - 0.5 * params.SCALE
+    p_1 = App.Vector(inner_X_p,  0, -p_pitch * 0.45)
+    p_2 = App.Vector(p_radius, 0, -p_pitch * 0.15)
+    p_3 = App.Vector(p_radius, 0,  p_pitch * 0.15)
+    p_4 = App.Vector(inner_X_p,  0,  p_pitch * 0.45)
     p_wire = Part.Wire(Part.makePolygon([p_1, p_2, p_3, p_4, p_1]))
 
     p_sweep = Part.Wire(p_helix).makePipeShell([p_wire], True, True)
     p_core  = Part.makeCylinder(p_r_inner, p_length + 2.0, App.Vector(0, 0, -1.0))
     
-    pivot_cutter_base = p_core.fuse(p_sweep).removeSplitter()
+    pivot_cutter_base = p_core.fuse(p_sweep)
     pivot_cutter = pivot_cutter_base.copy()
     pivot_cutter.Placement.Base = App.Vector(0, 0, start_z)
 
     bottom_trimmer = Part.makeBox(100.0, 100.0, 100.0, App.Vector(-50.0, -50.0, -100.0 + start_z))
-    pivot_cutter = pivot_cutter.cut(bottom_trimmer).removeSplitter()
+    pivot_cutter = pivot_cutter.cut(bottom_trimmer)
     
     pivot_chamfer = Part.makeCone(p_radius+1.0, p_radius-1.0, 2.0, App.Vector(0,0,HUB_H-2.0))
-    pivot_cutter = pivot_cutter.fuse(pivot_chamfer).removeSplitter()
+    pivot_cutter = pivot_cutter.fuse(pivot_chamfer)
 
     # Cut pivot thread into arm
-    shape_cut = body_base.cut(pivot_cutter).removeSplitter()
+    shape_cut = body_base.cut(pivot_cutter)
     
     shape = Part.makeCompound([shape_cut, male_peg])
     

@@ -20,7 +20,7 @@
 - Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
-- Structural connections for segments rely on male threaded cylindrical pegs and female threaded holes. The thread is timed so that when fully tightened, the outer rectangular profiles align seamlessly to form a uniform rod.
+- Structural connections for segments rely on male threaded cylindrical pegs and female threaded holes. The thread is timed so that when fully tightened, the outer profiles (rectangular for legs, square transitions for rods) align seamlessly to form a uniform continuous member.
 - **CRITICAL Pattern for Sweeps/Threads**: Any `Part.Wire(helix).makePipeShell()` or complex extrusion must be generated at the origin (`App.Vector(0,0,0)`) wrapped in `Part.Solid()` and immediately fused to its core (`.fuse()`). Only *after* the threaded solid is finalized should it be repositioned using `.Placement` to interact with the main body. Creating sweeps off-origin results in disjoint bounding boxes and silent boolean (`.cut`) failures in OpenCASCADE.
 
 ## FDM Print Constraints
@@ -77,15 +77,14 @@ clothes-drying-rack/
 ├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
 ├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
 ├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)
-├── part_05_top_t_bracket.py         ← rigid angled T-bracket connecting leg to top rod
-├── part_08_main_rod.py
-├── part_09_secondary_rod.py
-├── part_10_side_arm_rod.py
-├── part_11_stability_bar.py
-├── part_12_locking_hinge.py
-├── part_13_foot_cap.py
-├── part_14_rod_end_cap.py
-├── part_15_windproof_hook.py
+├── part_05_top_t_bracket.py         ← universal modular T-bracket (3 female sockets) for inline or top connections
+├── part_06_drying_rod.py            ← universal stadium-profile rod segment
+├── part_07_threaded_adapter_pin.py  ← male-to-male pin for female-to-female joints
+├── part_08_stability_bar.py
+├── part_09_locking_hinge.py
+├── part_10_foot_cap.py
+├── part_11_rod_end_cap.py
+├── part_12_windproof_hook.py
 ├── assembly.py
 ├── export_all.py
 ├── run.sh

@@ -3,8 +3,8 @@
 ## Scope
 
 Produce one part and an assembly script:
-1. **`part_01_leg_segment.py`** — a rectangular hollow leg segment with a solid threaded cylindrical male peg at one end, and an integrated threaded cylindrical hole serving as the female socket at the other.
-2. **`assembly.py`** — script for assembling a stacked section of two leg segments.
+- **`part_01_leg_segment.py`** — a rectangular hollow leg segment with a solid threaded cylindrical male peg at one end, and an integrated threaded cylindrical hole serving as the female socket at the other.
+- **`assembly.py`** — script for assembling a stacked section of two leg segments.
 
 These use a fully 3D-printable cylindrical threaded mechanism timed to align the exterior profiles perfectly when tight.
 

@@ -16,7 +16,7 @@ An X-frame collapsible laundry drying rack (79" medium variant):
 - 3 horizontal drying rods at different heights (1 main top rail, 1 secondary lower rail, 1 retractable side arm)
 - 2 locking hinges at the X-frame crossing points, specifically designed to allow the entire rack to be smoothly folded and collapsed for storage.
 - Anti-slip rubber foot caps on all 4 leg ends
-- Rod end caps (rectangular plugs)
+- Rod end caps (stadium profile plugs)
 - Middle stability bar connecting the two X-frames
 
 ## Target Customer

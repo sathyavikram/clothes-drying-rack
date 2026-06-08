@@ -32,87 +32,81 @@ def construct_t_bracket():
     p5 = App.Vector(w/2, -w/2 - C, 0)
     p6 = App.Vector(w/2, -arm_len, 0)
     p7 = App.Vector(-w/2, -arm_len, 0)
-    
+
+    # Note: Using Counter-Clockwise order here doesn't matter because we added
+    # a check to flip the volume if it's negative later.
     wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p5, p6, p7, p1]))
     face = Part.Face(wire)
     body = face.extrude(App.Vector(0, 0, d))
     body.Placement.Base = App.Vector(0, 0, -d/2)
-    body = body.makeFillet(2.0 * params.SCALE, body.Edges)
     
-    # --- THREAD PARAMETERS ---
-    t_pitch   = params.PEG_THREAD_PITCH
-    t_length  = params.PEG_LENGTH
-    
-    # --- MALE THREAD (Crossbar, pointing +X) ---
-    tm_radius  = params.PEG_THREAD_RADIUS - params.THREAD_CLEARANCE
-    tm_r_inner = tm_radius - (t_pitch * 0.45)
-    
-    tm_helix = Part.makeHelix(t_pitch, t_length, tm_r_inner, 0)
-    inner_X_m = tm_r_inner - 2.0 * params.SCALE
-    pm1 = App.Vector(inner_X_m,  0, -t_pitch * 0.35)
-    pm2 = App.Vector(tm_radius, 0, -t_pitch * 0.10)
-    pm3 = App.Vector(tm_radius, 0,  t_pitch * 0.10)
-    pm4 = App.Vector(inner_X_m,  0,  t_pitch * 0.35)
-    tm_wire = Part.Wire(Part.makePolygon([pm1, pm2, pm3, pm4, pm1]))
-    
-    tm_sweep = Part.Solid(Part.Wire(tm_helix).makePipeShell([tm_wire], True, True))
-    tm_core = Part.makeCylinder(tm_r_inner, t_length, App.Vector(0, 0, 0))
-    male_thread_base = tm_core.fuse(tm_sweep).removeSplitter()
-    
-    # Chamfer and clean
-    chamfer_m = Part.makeCone(
-        tm_radius + 2.0, tm_r_inner,
-        t_pitch / 2 + 1,
-        App.Vector(0, 0, t_length - t_pitch / 2 - 1)
-    )
-    end_cutter_m = Part.makeCylinder(
-        tm_radius + 5.0, t_pitch + 2.0,
-        App.Vector(0, 0, t_length - 1)
-    )
-    male_peg_clean = male_thread_base.cut(end_cutter_m.cut(chamfer_m)).removeSplitter()
-    
-    # Rotate to point +X
-    rot_to_X = App.Rotation(App.Vector(0,1,0), 90)
-    male_peg_X = male_peg_clean.copy()
-    male_peg_X.Placement = App.Placement(App.Vector(arm_len - 1.0, 0, 0), rot_to_X)
-    
-    # --- FEMALE THREAD CUTTER ---
-    tf_radius  = params.PEG_THREAD_RADIUS
-    tf_r_inner = tf_radius - (t_pitch * 0.45)
-    tf_length_cut = t_length + 2.0
-    tf_total_len = tf_length_cut + t_pitch*2
+    if body.Volume < 0:
+        body.reverse()
+        
+    try:
+        body = body.makeFillet(2.0 * params.SCALE, body.Edges)
+    except:
+        print("Fillet failed, continuing without fillet.")
+
+    # ------------------------------------------------------------------------
+    # 3. Create female thread cutter for sockets
+    # ------------------------------------------------------------------------
+    t_pitch = params.PEG_THREAD_PITCH
+    tf_radius = params.PEG_THREAD_RADIUS
+    tf_r_inner = tf_radius - (t_pitch * 0.55)
+    tf_length_cut = params.PEG_LENGTH + 2.0 
+    tf_total_len = tf_length_cut + 2.0
     
     tf_helix = Part.makeHelix(t_pitch, tf_total_len, tf_r_inner, 0)
-    inner_X_f = tf_r_inner - 2.0 * params.SCALE
-    pf1 = App.Vector(inner_X_f,  0, -t_pitch * 0.35)
-    pf2 = App.Vector(tf_radius, 0, -t_pitch * 0.10)
-    pf3 = App.Vector(tf_radius, 0,  t_pitch * 0.10)
-    pf4 = App.Vector(inner_X_f,  0,  t_pitch * 0.35)
+    inner_X_f = tf_r_inner - 0.5 * params.SCALE
+    pf1 = App.Vector(inner_X_f,  0, -t_pitch * 0.45)
+    pf2 = App.Vector(tf_radius, 0, -t_pitch * 0.15)
+    pf3 = App.Vector(tf_radius, 0,  t_pitch * 0.15)
+    pf4 = App.Vector(inner_X_f,  0,  t_pitch * 0.45)
     tf_wire = Part.Wire(Part.makePolygon([pf1, pf2, pf3, pf4, pf1]))
     
     tf_sweep = Part.Solid(Part.Wire(tf_helix).makePipeShell([tf_wire], True, True))
     tf_core  = Part.makeCylinder(tf_r_inner, tf_total_len, App.Vector(0, 0, 0))
-    thread_cutter_base = tf_core.fuse(tf_sweep).removeSplitter()
+    thread_cutter_base = tf_core.fuse(tf_sweep)
+    print(f"DEBUG: thread_cutter_base valid={thread_cutter_base.isValid()} volume={thread_cutter_base.Volume}")
     
     chamfer_f_base = Part.makeCone(
         tf_radius + 2.0, tf_radius - 2.0, 4.0,
         App.Vector(0, 0, 0)
     )
     
-    # Female at -Y (points +Y, placed at bottom)
-    rot_to_Y = App.Rotation(App.Vector(1,0,0), -90)
-    thread_cutter_neg_Y = thread_cutter_base.copy()
-    thread_cutter_neg_Y.Placement = App.Placement(App.Vector(0, -arm_len - t_pitch, 0), rot_to_Y)
-    chamfer_f_neg_Y = chamfer_f_base.copy()
-    chamfer_f_neg_Y.Placement = App.Placement(App.Vector(0, -arm_len - 2.0, 0), rot_to_Y)
+    t_offset = t_pitch + 0.13
 
-    # --- FUSE AND CUT ---
-    # Combine body with male peg
-    bracket_fused = body.fuse(male_peg_X).removeSplitter()
-    
-    # Cut female socket
-    bracket_cut = bracket_fused.cut(thread_cutter_neg_Y).cut(chamfer_f_neg_Y).removeSplitter()
-    
+    # 1. Female at -Y (Bottom Arm, points +Y to cut inward)
+    rot_to_neg_Y = App.Rotation(App.Vector(1,0,0), -90)
+    cutter_neg_Y = thread_cutter_base.copy()
+    cutter_neg_Y.Placement = App.Placement(App.Vector(0, -arm_len - t_offset, 0), rot_to_neg_Y)
+    chamf_neg_Y = chamfer_f_base.copy()
+    chamf_neg_Y.Placement = App.Placement(App.Vector(0, -arm_len - 2.0, 0), rot_to_neg_Y)
+
+    # 2. Female at +Y (Top Face, points -Y to cut inward)
+    rot_to_pos_Y = App.Rotation(App.Vector(1,0,0), 90)
+    cutter_pos_Y = thread_cutter_base.copy()
+    cutter_pos_Y.Placement = App.Placement(App.Vector(0, w/2 + t_offset, 0), rot_to_pos_Y)
+    chamf_pos_Y = chamfer_f_base.copy()
+    chamf_pos_Y.Placement = App.Placement(App.Vector(0, w/2 + 2.0, 0), rot_to_pos_Y)
+
+    # 3. Female at +X (Side Arm, points -X to cut inward)
+    rot_to_pos_X = App.Rotation(App.Vector(0,1,0), -90)
+    cutter_pos_X = thread_cutter_base.copy()
+    cutter_pos_X.Placement = App.Placement(App.Vector(arm_len + t_offset, 0, 0), rot_to_pos_X)
+    chamf_pos_X = chamfer_f_base.copy()
+    chamf_pos_X.Placement = App.Placement(App.Vector(arm_len + 2.0, 0, 0), rot_to_pos_X)
+
+    # --- CUT ALL 3 SOCKETS ---
+    bracket_cut = body.cut(cutter_neg_Y)
+    bracket_cut = bracket_cut.cut(chamf_neg_Y)
+    bracket_cut = bracket_cut.cut(cutter_pos_Y)
+    bracket_cut = bracket_cut.cut(chamf_pos_Y)
+    bracket_cut = bracket_cut.cut(cutter_pos_X)
+    bracket_cut = bracket_cut.cut(chamf_pos_X)
+    # Removing removeSplitter entirely because it causes OCCError
+    print(f"Shape valid: {bracket_cut.isValid()}, volume: {bracket_cut.Volume}")    
     # Add a nice chamfer to the outer corners for visual appeal
     # Not using Part.makeChamfer on edges to avoid index fragility.
     # Instead, we just keep the flat T-shape. The inner fillet is already built into the 2D profile!
