@@ -12,7 +12,7 @@ These use a fully 3D-printable cylindrical threaded mechanism timed to align the
 
 ### Leg Segment (`part_01_leg_segment.py`)
 - **Cross-section**: Rectangular hollow segment.
-- **Segment Outer Dimensions**: Width: 25 mm. Depth: 15 mm. **Wall Thickness**: 3 mm. 
+- **Segment Outer Dimensions**: Width: 25 mm. Depth: 25 mm. **Wall Thickness**: 3 mm. 
 - **Segment Inner Dimensions**: (derived for threaded socket clearance based on `PEG_THREAD_RADIUS`).
 - **Segment length**: 170 mm body + 25 mm peg stub at the top end = **195 mm total**.
   - Diagonal capacity on a 175mm plate: `175 × √2 ≈ 247 mm`. The 195 mm total length fits easily.

@@ -17,8 +17,8 @@
 - Must export manifold geometry (0 non-manifold edges).
 
 ## Non-goals
-- Do not design the top or bottom brackets yet.
-- Do not make the pin unremovable, but it needs to be secure enough for typical drying rack usage.
+- Do not make the pin permanently unremovable; it must be tool-free removable for maintenance/transport.
+- Do not add external metal hardware; the design is 100% printable plastic.
 
 ## Context
 - This phase implements Phase 3 from the roadmap.

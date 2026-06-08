@@ -2,13 +2,14 @@
 
 ## Task Group 1: Prerequisites
 1. Open and review `params.py` to ensure all necessary clearances and width/depth dimensions for the top rod and leg connection are available (e.g. `LEG_WIDTH`, `LEG_DEPTH`, `FIT_CLEARANCE`, `PEG_THREAD_RADIUS`).
-2. Identify the pivot thickness requirements and thread pitch parameters from Phase 3 hinge to reuse for the top bracket.
+2. Determine the required deployed leg angle from the design (e.g. 65 degrees from horizontal, or 25 degrees from vertical) to use as the built-in angle for the T-bracket stem.
 
 ## Task Group 2: Modellers
-1. **Implement `part_05_top_bracket_rod_mount.py`**: Model the mount that attaches rigidly to the top drying rod. Needs a peg/socket for the rod and a female threaded bore for the pivot pin.
-2. **Implement `part_06_top_bracket_leg_mount.py`**: Model the mount that attaches to the leg segment. Needs a peg/socket for the leg and a clearance bore for the pivot pin.
-3. **Implement `part_07_top_bracket_pin.py`**: Model the male threaded locking pivot pin tailored to the thickness of parts 05 and 06.
+1. **Implement `part_05_top_t_bracket.py`**: Model the rigid T-bracket. 
+   - **Stem:** Angled at the deployed angle to attach to the X-frame leg. Needs standard timed threaded joinery.
+   - **Crossbar:** Horizontal mount for the top drying rod. Needs standard timed threaded joinery.
 
 ## Task Group 3: Assembly & Validation
-1. Use `test_render.py` or create a temporary assembly script to position the rod mount, leg mount, and pin together to simulate both fully folded and fully deployed states.
-2. Ensure no mechanical binding occurs between the top rod line and the leg line during rotation.
+1. Update `assembly.py` to load and position the T-bracket at the top of the B-arm leg using a mathematical rotation matrix derived from the 65° deployed angle.
+2. Run `./run.sh assembly` headlessly to verify the bracket appears correctly placed and no Python errors occur.
+3. Open `exports/assembly.step` in FreeCAD GUI (`./run.sh open assembly`) to visually confirm the crossbar is horizontal in the deployed configuration.

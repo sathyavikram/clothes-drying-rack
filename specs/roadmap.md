@@ -41,13 +41,13 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 4 — Top T-Connector Bracket
-- Replaces generic static T-bracket with a fully 3D-printable, fully threaded folding joint:
-  - `part_05_top_bracket_rod_mount.py`: Mounts rigidly to the top drying rod (using standard threaded peg/socket joinery) and contains a female threaded pivot.
-  - `part_06_top_bracket_leg_mount.py`: Mounts rigidly to the leg segment (using standard threaded peg/socket joinery) and contains a clearance bore.
-  - `part_07_top_bracket_pin.py`: Male threaded pivot pin that joins the two mounts, allowing the leg to fold flat against the top rod.
-- Joinery connecting to long rods must be timed to align outer rectangular profiles.
-- Export STEP + STL; visual validation pass
+## Phase 4 — Top L-Connector Bracket ✅
+- Implemented `part_05_top_t_bracket.py` (updated to L-shape): a single-piece rigid L-shaped bracket connecting the top of the X-frame leg to the main horizontal drying rod.
+- **Body geometry**: 2D L-shaped profile (two arms of 45 mm each, matching `LEG_WIDTH = 25 mm` square cross-section × `LEG_DEPTH = 25 mm` extrusion depth) extruded with 2 mm fillets on all edges; inner corner chamfered (4 mm) to avoid a stress riser at the junction.
+- **Print orientation**: Part lies flat in the XY plane; Z-thickness equals `LEG_DEPTH` (25 mm). Both threaded features print horizontally, consistent with leg segment convention.
+- **Symmetric Arms**: Both arms (45 mm each) feature identical standard timed female threaded blind sockets (radius = `PEG_THREAD_RADIUS`, chamfered lead-in). This symmetrical design allows the bracket to fit in either direction to the X-frame leg or the horizontal rod.
+- **Assembly placement** (`assembly.py`): Bracket positioned at the top of Leg B arm using a mathematical rotation matrix derived from the 65° X-frame deployed angle; translation vector computed so one female socket mouth meets the leg peg tip exactly.
+- Export `part_05_top_t_bracket.step` + `.stl`; integrated into `assembly.step`; visual validation pass.
 
 ---
 

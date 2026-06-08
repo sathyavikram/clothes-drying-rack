@@ -102,7 +102,9 @@ def construct_hinge_bottom():
     # Stop Peg for the hinge mechanism itself
     stop_peg_A = Part.makeCylinder(3.6, 4.0, App.Vector(14.0 * params.SCALE, 0, HUB_H), App.Vector(0,0,1))
     
-    body_base = hub_A.fuse(body_A).fuse(stop_peg_A).removeSplitter()
+    body_base = hub_A.fuse(body_A).removeSplitter()
+    body_base = body_base.makeFillet(2.0 * params.SCALE, body_base.Edges)
+    body_base = body_base.fuse(stop_peg_A).removeSplitter()
     
     # Apply segment joints
     body_base = body_base.cut(sock_cutter).cut(chamfer_f).removeSplitter()

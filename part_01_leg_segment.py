@@ -27,6 +27,7 @@ def construct_leg_segment():
     # Body (Solid Rectangular initially)
     body = Part.makeBox(w, d, l)
     body.Placement.Base = App.Vector(-w/2, -d/2, -l/2)
+    body = body.makeFillet(2.0 * params.SCALE, body.Edges)
     
     # Hollow out the center, leaving 30mm solid at each end for joinery
     inner_w = w - 2*wall
@@ -35,6 +36,7 @@ def construct_leg_segment():
     if inner_l > 0:
         inner_box = Part.makeBox(inner_w, inner_d, inner_l)
         inner_box.Placement.Base = App.Vector(-inner_w/2, -inner_d/2, -inner_l/2)
+        inner_box = inner_box.makeFillet(2.0 * params.SCALE, inner_box.Edges)
         body = body.cut(inner_box)
     
     t_pitch   = params.PEG_THREAD_PITCH

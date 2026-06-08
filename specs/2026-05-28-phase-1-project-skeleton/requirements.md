@@ -21,7 +21,7 @@ Phase 1 delivers the non-geometric foundation of the project: the parameter file
 - **All dimensions in millimetres** — inches are converted in `params.py` and never appear elsewhere.
 - **Derived values computed in params.py** — e.g. `PEG_WIDTH = LEG_WIDTH - 2 * LEG_WALL`; part files do zero arithmetic on raw params.
 - **Segment max = 170 mm** — any dimension exceeding this (given 175mm bed diagonal) triggers segmentation in later phases.
-- **Tolerances**: Thread clearance = 0.6 mm, sliding fit clearance = 0.4 mm, press fit = 0.2 mm.
+- **Tolerances**: Thread clearance = 0.6 mm, sliding fit clearance = 0.4 mm (`TOLERANCE_SLIDING`), press fit = 0.2 mm (`TOLERANCE_PRESS`).
 - **Joints**: Timed cylindrical threaded peg features (standard alignment feature for all segmented structural parts).
 - `exports/` is git-ignored.
 
@@ -37,7 +37,7 @@ Phase 1 delivers the non-geometric foundation of the project: the parameter file
 | `FOLDED_LENGTH` | 1430 mm |
 | `FOLDED_THICKNESS` | 102 mm |
 | `LEG_WIDTH` | 25 mm |
-| `LEG_DEPTH` | 15 mm |
+| `LEG_DEPTH` | 25 mm |
 | `LEG_WALL` | 3 mm |
 
 ## Context

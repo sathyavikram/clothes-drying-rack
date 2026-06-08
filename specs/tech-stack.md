@@ -4,7 +4,7 @@
 
 | Layer | Tool |
 |---|---|
-| Parametric modelling | FreeCAD 0.21+ (Python scripting API) |
+| Parametric modelling | FreeCAD 1.1.0 (Python scripting API) |
 | Geometry kernel | OpenCASCADE (OCC) via `Part` workbench |
 | Headless execution | `freecadcmd` (`/Applications/FreeCAD.app/Contents/Resources/bin/freecadcmd`) |
 | GUI inspection | FreeCAD GUI (`/Applications/FreeCAD.app/Contents/MacOS/FreeCAD`) |
@@ -46,7 +46,7 @@ Long structural members (legs, rods) exceed the build plate and **must** be segm
 | `THREAD_CLEARANCE` | 0.6 mm (shrinks male thread radius for post-print rotation) |
 | `GENERAL_CLEARANCE` | 0.4 mm (clearance holes for pins/shafts) |
 | `LEG_WIDTH` | 25.0 mm |
-| `LEG_DEPTH` | 15.0 mm |
+| `LEG_DEPTH` | 25.0 mm |
 | `PEG_LENGTH` | 25.0 mm |
 
 ## Dimensions — 79" Variant (canonical model)
@@ -62,6 +62,7 @@ All values converted to mm from the reference images:
 | Folded length | 56.3" | 1430 mm |
 | Folded thickness | 4" | 102 mm |
 | Leg Cross-section width | ~1.0" | 25 mm |
+| Leg Cross-section depth | ~1.0" | 25 mm |
 | Leg wall thickness | ~0.12" | 3 mm |
 
 > Outer dimensions and wall are estimated from reference images; adjust in `params.py` if measured values differ.
@@ -76,9 +77,7 @@ clothes-drying-rack/
 ├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
 ├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
 ├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)
-├── part_05_top_bracket_rod_mount.py ← top bracket rod mount (female threaded pivot)
-├── part_06_top_bracket_leg_mount.py ← top bracket leg mount (clearance bore)
-├── part_07_top_bracket_pin.py       ← top bracket pivot pin (male threads)
+├── part_05_top_t_bracket.py         ← rigid angled T-bracket connecting leg to top rod
 ├── part_08_main_rod.py
 ├── part_09_secondary_rod.py
 ├── part_10_side_arm_rod.py

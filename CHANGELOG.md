@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-06-08
+- Completed Phase 4: Top L-Connector Bracket implementation.
+- Redesigned the top bracket into a single-piece rigid L-shaped bracket with symmetric female threaded blind sockets, replacing the previous multi-part design.
+- Updated `assembly.py` and generation scripts for the new symmetric bracket integration.
+- Updated Phase 4 specifications and roadmap to reflect the updated L-shaped design capable of fitting interchangeably on the X-frame or horizontal rod.
 ## 2026-06-02
 - Completed Phase 3: X-Frame Center Hinge implementation.
 - Redesigned monolithic print-in-place hinge into a 3-part threaded mechanism (bottom, top, and pin) to enhance shear strength and printability.

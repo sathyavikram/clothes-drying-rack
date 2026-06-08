@@ -73,6 +73,7 @@ def construct_hinge_pin():
     # ─── Head ────────────────────────────────────────────────
     z_head = z_smooth + smooth_len
     head = Part.makeCylinder(head_radius, head_len, App.Vector(0, 0, z_head))
+    head = head.makeFillet(1.5 * params.SCALE, head.Edges)
     # Add a flat head slot so a screwdriver or coin can turn it
     slot_w = 4.0 * params.SCALE
     slot_d = 2.0 * params.SCALE

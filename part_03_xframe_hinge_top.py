@@ -100,6 +100,7 @@ def construct_hinge_top():
     )
 
     body_base = hub_B.fuse(body_B).removeSplitter()
+    body_base = body_base.makeFillet(2.0 * params.SCALE, body_base.Edges)
     
     # Apply segment joints
     body_base = body_base.cut(sock_cutter).cut(chamfer_f).removeSplitter()

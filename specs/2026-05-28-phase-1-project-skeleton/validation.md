@@ -25,13 +25,15 @@ Check each printed value:
 | Check | Expected |
 |---|---|
 | `LEG_WIDTH` | 25.0 mm |
-| `LEG_DEPTH` | 15.0 mm |
+| `LEG_DEPTH` | 25.0 mm |
 | `LEG_WALL` | 3.0 mm |
 | `RACK_HEIGHT` | 1300.0 mm |
 | `RACK_DEPTH` | 490.0 mm |
-| `SEGMENT_MAX` | 170.0 mm |
-| `FIT_CLEARANCE` | 0.4 mm |
+| `SEGMENT_BODY_LENGTH` | 170.0 mm |
+| `TOLERANCE_SLIDING` | 0.4 mm |
 | `TOLERANCE_PRESS` | 0.2 mm |
+| `THREAD_CLEARANCE` | 0.6 mm |
+| `GENERAL_CLEARANCE` | 0.4 mm |
 | `BUILD_PLATE_X/Y/Z` | 175.0 mm each |
 | `EXPORT_DIR` | Absolute path ending in `/exports` |
 

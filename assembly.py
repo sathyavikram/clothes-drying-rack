@@ -17,9 +17,7 @@ import part_01_leg_segment
 import part_02_xframe_hinge_bottom
 import part_03_xframe_hinge_top
 import part_04_xframe_hinge_pin
-import part_05_top_bracket_rod_mount
-import part_06_top_bracket_leg_mount
-import part_07_top_bracket_pin
+import part_05_top_t_bracket
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPORT_BASE = os.path.join(CURRENT_DIR, "exports")
@@ -50,15 +48,6 @@ def add_part_to_doc(doc, shape, name, color):
     return feature
 
 def build_assembly():
-    clear_exports()
-    
-    part_01_leg_segment.construct_leg_segment()
-    part_02_xframe_hinge_bottom.construct_hinge_bottom()
-    part_03_xframe_hinge_top.construct_hinge_top()
-    part_04_xframe_hinge_pin.construct_hinge_pin()
-    part_05_top_bracket_rod_mount.construct_rod_mount()
-    part_06_top_bracket_leg_mount.construct_leg_mount()
-    part_07_top_bracket_pin.construct_bracket_pin()
     
     doc = App.newDocument("Assembly")
     
@@ -114,50 +103,46 @@ def build_assembly():
     leg_b_bot.Placement = rot_65.multiply(place_b_bot.multiply(base_leg.Placement))
     add_part_to_doc(doc, leg_b_bot, "Leg_B_Bottom", color_leg_2)
     
-    # ─── PHASE 4 T-Bracket at the top of Leg_B_Top ───
+    # ─── PHASE 4 Rigid T-Bracket at the top of Leg_B_Top ───
     shoulder_z = params.SEGMENT_BODY_LENGTH / 2.0  # 85.0
+    
+    t_bracket = load_step("part_05_top_t_bracket.step")
+    t_bracket_base = t_bracket.copy()
+    
+    # ─── Exact Mathematical Placement ───
+    # Local Bracket: Stem along -Y, Crossbar along +X.
+    # World Target: Stem points down leg (sin 65, -cos 65, 0)
+    # Crossbar points along world +Z (0, 0, 1)
+    import math
+    rad = math.radians(65)
+    
+    # Rotation Matrix columns: Local X -> World Z, Local Y -> -Stem_World, Local Z -> Cross
+    mat = App.Matrix(
+        0, -math.sin(rad), -math.cos(rad), 0,
+        0,  math.cos(rad), -math.sin(rad), 0,
+        1,  0,             0,              0,
+        0,  0,             0,              1
+    )
+    rot_world = App.Rotation(mat)
+    
+    # Find P_world: The top of the leg peg
+    leg_d_half = params.LEG_DEPTH / 2.0
     arm_b_z = 25.4
-    unrot = App.Placement(App.Vector(0,0,0), App.Rotation(App.Vector(1,0,0), -90))
+    Z_b = leg_d_half + arm_b_z
+    P_local = App.Vector(0, 0, shoulder_z)
+    P_world = rot_65.multiply(place_b_top).multVec(P_local)
     
-    leg_mount = load_step("part_06_top_bracket_leg_mount.step")
-    leg_mount_base = leg_mount.copy()
-    leg_mount_base.Placement = unrot.multiply(leg_mount.Placement)
-    offset_p6 = App.Placement(App.Vector(0, 0, shoulder_z), App.Rotation(0,0,0,1))
-    p6_world = rot_65.multiply(place_b_top.multiply(offset_p6.multiply(leg_mount_base.Placement)))
+    # Offset the bracket so the female thread (at Y = -stem_len) aligns with P_world
+    stem_len = 45.0 * params.SCALE
+    hole_world_offset = rot_world.multVec(App.Vector(0, -stem_len, 0))
+    O_world = P_world.sub(hole_world_offset)
     
-    leg_mount_p = leg_mount_base.copy()
-    leg_mount_p.Placement = p6_world
-    add_part_to_doc(doc, leg_mount_p, "TBracket_LegMount", (0.3, 0.6, 0.8))
+    bracket_world = App.Placement(O_world, rot_world)
     
-    rod_mount = load_step("part_05_top_bracket_rod_mount.step")
-    rod_mount_base = rod_mount.copy()
-    rod_mount_base.Placement = unrot.multiply(rod_mount.Placement)
-    offset_p5 = App.Placement(App.Vector(0, -arm_b_z, shoulder_z + 40.0), App.Rotation(0,0,0,1))
-    rot_p5_deploy = App.Placement(App.Vector(0,0,0), App.Rotation(App.Vector(0,1,0), -45))
-    p5_world = rot_65.multiply(place_b_top.multiply(offset_p5.multiply(rot_p5_deploy.multiply(rod_mount_base.Placement))))
+    t_bracket_p = t_bracket_base.copy()
+    t_bracket_p.Placement = bracket_world
     
-    rod_mount_p = rod_mount_base.copy()
-    rod_mount_p.Placement = p5_world
-    add_part_to_doc(doc, rod_mount_p, "TBracket_RodMount", (0.3, 0.8, 0.3))
-    
-    # Position of part 07 (Pin)
-    t_pin = load_step("part_07_top_bracket_pin.step")
-    t_pin_base = t_pin.copy()
-    
-    # Let's completely override the placement. The shape points +Z originally.
-    # The pin native export lies flat via rotation:
-    # rot_flat = App.Placement(App.Vector(0,0,head_radius), App.Rotation(App.Vector(1,0,0), 90))
-    # We unrotate it with unrot (App.Rotation((1,0,0), -90)). Just shifting it to origin.
-    shift_z = App.Placement(App.Vector(0, 0, -16.0), App.Rotation(0,0,0,1))
-    t_pin_base.Placement = shift_z.multiply(unrot.multiply(t_pin.Placement))
-    
-    # Pin axis is +Z. We want it pointing -Y relative to the leg frame.
-    offset_pin = App.Placement(App.Vector(0, 15.0, shoulder_z + 40.0), App.Rotation(App.Vector(1,0,0), 90))
-    pin_world = rot_65.multiply(place_b_top.multiply(offset_pin.multiply(t_pin_base.Placement)))
-    
-    t_pin_p = t_pin_base.copy()
-    t_pin_p.Placement = pin_world
-    add_part_to_doc(doc, t_pin_p, "TBracket_Pin", color_pin)
+    add_part_to_doc(doc, t_bracket_p, "Top_TBracket", (0.3, 0.8, 0.3))
 
     # Export Assembly
     objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
