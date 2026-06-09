@@ -65,47 +65,42 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 7 — Locking Hinge Body (`part_09_locking_hinge.py`)
-- Flat rectangular plate with two pivot holes and a locking notch/detent
-- Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
-- Export STEP + STL; visual validation pass
-
----
-
-## Phase 8 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
+## Phase 7 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
 - Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 9 — Rod End Cap (`part_11_rod_end_cap.py`)
+## Phase 8 — Rod End Cap (`part_11_rod_end_cap.py`)
 - Small stadium profile (pill shape) plug that caps the open ends of the drying rods
 - Press-fit with tight tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 10 — Windproof Hook (`part_12_windproof_hook.py`)
+## Phase 9 — Windproof Hook (`part_12_windproof_hook.py`)
 - Small J-hook accessory that clips onto the stadium-profile drying rod
 - Clip opening matches stadium profile dimensions + tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 11 — Full Assembly (`assembly.py`)
-- Clears `exports/`; regenerates all parts
-- Loads every STEP file; positions all instances
-- 2 X-frames (left & right), 3 rods, 1 stability bar, 6 hinges, 4 foot caps
-- Exports `assembly.step` and `assembly.stl`
-- Visual validation pass
+## Phase 10 — Locking Hinge Body (`part_09_locking_hinge.py`) (To Be Decided)
+- Flat rectangular plate with two pivot holes and a locking notch/detent
+- Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
+- *Note: We will evaluate if this part is strictly necessary before the Full Assembly phase.*
+- Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 12 — Final Export & Validation
-- Run `export_all.py` — confirm N/N parts exported
-- Select and render final assembly image
-- Tag release commit
+## Phase 11 — Final Review & Full Assembly
+- Visual inspection of each individual part to identify and fix any small lingering issues.
+- (If issues are found, this step can be expanded into multiple sub-phases as needed to address them).
+- Update `assembly.py` to position all instances correctly (2 X-frames, 3 rods, 1 stability bar, optionally 6 hinges, 4 foot caps).
+- Run final export script to clear `exports/` and regenerate all parts cleanly.
+- Export `assembly.step` and `assembly.stl`.
+- Final visual validation of the full assembly and tag release commit.
 
 ---
 
