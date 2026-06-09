@@ -36,17 +36,16 @@ def construct_hinge_pin():
     # ─── Threaded shaft ──────────────────────────────────────
     t_helix = Part.makeHelix(t_pitch, t_length, t_r_inner, 0)
     
-    inner_X = t_r_inner - 0.5 * params.SCALE
-    p1 = App.Vector(inner_X,  0, -t_pitch * 0.45)
-    p2 = App.Vector(t_radius, 0, -t_pitch * 0.15)
-    p3 = App.Vector(t_radius, 0,  t_pitch * 0.15)
-    p4 = App.Vector(inner_X,  0,  t_pitch * 0.45)
+    inner_X = t_r_inner - 2.0 * params.SCALE
+    p1 = App.Vector(inner_X,  0, -t_pitch * 0.35)
+    p2 = App.Vector(t_radius, 0, -t_pitch * 0.10)
+    p3 = App.Vector(t_radius, 0,  t_pitch * 0.10)
+    p4 = App.Vector(inner_X,  0,  t_pitch * 0.35)
     t_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
 
-    t_sweep = Part.Solid(Part.Wire(t_helix).makePipeShell([t_wire], True, True))
+    t_sweep = Part.Wire(t_helix).makePipeShell([t_wire], True, True)
+    t_sweep.Placement = App.Placement(App.Vector(0, 0, 0), App.Rotation(0,0,0,1))
     t_core  = Part.makeCylinder(t_r_inner, t_length, App.Vector(0, 0, 0))
-    
-    thread_base = t_core.fuse(t_sweep)
     chamfer = Part.makeCone(
         t_radius + 2.0, t_r_inner,
         t_pitch / 2 + 1,
@@ -81,7 +80,8 @@ def construct_hinge_pin():
     
     head = head.cut(slot_cut)
     
-    pin = thread_base.fuse(shaft).fuse(head)
+    # IMPORTANT: use makeCompound, NOT fuse()
+    pin = Part.makeCompound([t_core, t_sweep, shaft, head])
     
     # Cut chamfer at the tip
     pin = pin.cut(chamfer_cut)

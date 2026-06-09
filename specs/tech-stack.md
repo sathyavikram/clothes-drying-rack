@@ -17,7 +17,7 @@
 - `SCALE = 1.0` is always the **first line** of `params.py`
 - All dimensions are in **millimetres** (convert inches → mm in `params.py`)
 - Primitives: `Part.makeBox`, `Part.makeHollowBox`, etc.
-- Boolean ops: `.fuse()`, `.cut()`, `.common()`; call `.removeSplitter()` after chains ≥ 3 operands
+- Boolean ops: `.fuse()`, `.cut()`, `.common()`; use `Part.makeCompound()` for assembling thread cutters instead of `.fuse().removeSplitter()` to avoid silent boolean failures in OpenCASCADE.
 - Fillets: always wrapped in `try/except`
 - Every `construct_*()` function deletes existing exports before writing, then returns the shape
 - Structural connections for segments rely on male threaded cylindrical pegs and female threaded holes. The thread is timed so that when fully tightened, the outer profiles (rectangular for legs, square transitions for rods) align seamlessly to form a uniform continuous member.
