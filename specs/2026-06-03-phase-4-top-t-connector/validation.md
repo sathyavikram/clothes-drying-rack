@@ -1,7 +1,7 @@
 # Validation
 
 ## Required Checks
-- [x] Export `part_05_top_t_bracket` as STEP and STL.
+- [x] Export `part_05_top_l_bracket` as STEP and STL.
 - [x] Ensure the generated STL is manifold (zero non-manifold edges).
 
 ## Manual Review

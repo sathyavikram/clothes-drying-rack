@@ -5,7 +5,7 @@
 - Determine the required deployed leg angle from the design (e.g. 65 degrees from horizontal, or 25 degrees from vertical) to use as the built-in angle for the T-bracket stem.
 
 ## Task Group 2: Modellers
-- **Implement `part_05_top_t_bracket.py`**: Model the rigid T-bracket. 
+- **Implement `part_05_top_l_bracket.py`**: Model the rigid T-bracket. 
    - **Stem:** Angled at the deployed angle to attach to the X-frame leg. Needs standard timed threaded joinery.
    - **Crossbar:** Horizontal mount for the top drying rod. Needs standard timed threaded joinery.
 

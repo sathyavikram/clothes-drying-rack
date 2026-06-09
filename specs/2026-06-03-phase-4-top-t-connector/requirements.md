@@ -1,7 +1,7 @@
 # Requirements
 
 ## Scope
-- Replace the complex 3-part pivoting bracket with a single, rigid, 3D-printable Universal T-shaped bracket (`part_05_top_t_bracket.py`) featuring 3 identical female sockets.
+- Replace the complex 3-part pivoting bracket with a single, rigid, 3D-printable Universal T-shaped bracket (`part_05_top_l_bracket.py`) featuring 3 identical female sockets.
 - **Top/Bottom Sockets:** Connect inline with X-frame leg segments (using male-to-male adapter pins if continuing upwards), or cap the leg at the top.
 - **Side Socket:** Connects rigidly to the horizontal drying rod.
 

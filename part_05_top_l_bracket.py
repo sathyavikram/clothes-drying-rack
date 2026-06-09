@@ -14,8 +14,8 @@ importlib.reload(params)
 
 CURRENT_DIR  = os.path.dirname(os.path.abspath(__file__))
 EXPORT_BASE  = os.path.join(CURRENT_DIR, "exports")
-EXPORT_STEP  = os.path.join(EXPORT_BASE, "part_05_top_t_bracket.step")
-EXPORT_STL   = os.path.join(EXPORT_BASE, "part_05_top_t_bracket.stl")
+EXPORT_STEP  = os.path.join(EXPORT_BASE, "part_05_top_l_bracket.step")
+EXPORT_STL   = os.path.join(EXPORT_BASE, "part_05_top_l_bracket.stl")
 
 def construct_t_bracket():
     w = params.LEG_WIDTH

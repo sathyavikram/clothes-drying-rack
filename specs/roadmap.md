@@ -42,12 +42,12 @@ Build, validate, and commit before moving to the next phase.
 ---
 
 ## Phase 4 — Universal Modular T-Bracket ✅
-- Implemented `part_05_top_t_bracket.py` (updated to Universal T-Bracket): a single-piece rigid L-shaped bracket connecting X-frame legs to horizontal drying rods.
+- Implemented `part_05_top_l_bracket.py` (updated to Universal T-Bracket): a single-piece rigid L-shaped bracket connecting X-frame legs to horizontal drying rods.
 - **Body geometry**: 2D L-shaped profile (vertical arm 60 mm, horizontal arm 45 mm, matching `LEG_WIDTH = 25 mm` square cross-section × `LEG_DEPTH = 25 mm` extrusion depth) extruded with 2 mm fillets on all edges; inner corners chamfered (4 mm) to avoid stress risers at the junctions.
 - **Print orientation**: Part lies flat in the XY plane; Z-thickness equals `LEG_DEPTH` (25 mm). All three threaded features print horizontally, consistent with leg segment convention.
 - **Universal Sockets**: All three sockets (Top, Bottom, Side) feature identical standard timed female threaded blind sockets (radius = `PEG_THREAD_RADIUS`). This modular design allows the L-bracket to function as a T-junction, fitting anywhere: inline between two leg segments, or capping the top of the rack.
 - **Assembly placement** (`assembly.py`): Bracket positioned at leg joints using a mathematical rotation matrix derived from the 65° X-frame deployed angle. The bottom socket receives the leg peg from below, the side socket receives the horizontal rod, and the top socket can receive an adapter pin to continue the leg vertically.
-- Export `part_05_top_t_bracket.step` + `.stl`; integrated into `assembly.step`; visual validation pass.
+- Export `part_05_top_l_bracket.step` + `.stl`; integrated into `assembly.step`; visual validation pass.
 
 ---
 

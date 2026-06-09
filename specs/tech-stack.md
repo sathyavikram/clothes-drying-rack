@@ -77,7 +77,7 @@ clothes-drying-rack/
 ├── part_02_xframe_hinge_bottom.py   ← bottom hinge bracket (female threads)
 ├── part_03_xframe_hinge_top.py      ← top hinge bracket (clearance bore)
 ├── part_04_xframe_hinge_pin.py      ← locking pivot pin (male threads)
-├── part_05_top_t_bracket.py         ← universal modular T-bracket (3 female sockets) for inline or top connections
+├── part_05_top_l_bracket.py         ← universal modular T-bracket (3 female sockets) for inline or top connections
 ├── part_06_drying_rod.py            ← universal stadium-profile rod segment
 ├── part_07_threaded_adapter_pin.py  ← male-to-male pin for female-to-female joints
 ├── part_08_stability_bar.py

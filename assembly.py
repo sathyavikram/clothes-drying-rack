@@ -17,7 +17,7 @@ import part_01_leg_segment
 import part_02_xframe_hinge_bottom
 import part_03_xframe_hinge_top
 import part_04_xframe_hinge_pin
-import part_05_top_t_bracket
+import part_05_top_l_bracket
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPORT_BASE = os.path.join(CURRENT_DIR, "exports")
@@ -106,7 +106,7 @@ def build_assembly():
     # ─── PHASE 4 Rigid T-Bracket at the top of Leg_B_Top ───
     shoulder_z = params.SEGMENT_BODY_LENGTH / 2.0  # 85.0
     
-    t_bracket = load_step("part_05_top_t_bracket.step")
+    t_bracket = load_step("part_05_top_l_bracket.step")
     t_bracket_base = t_bracket.copy()
     
     # ─── Exact Mathematical Placement ───

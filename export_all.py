@@ -8,7 +8,7 @@ SCRIPTS = [
     "part_02_xframe_hinge_bottom.py",
     "part_03_xframe_hinge_top.py",
     "part_04_xframe_hinge_pin.py",
-    "part_05_top_t_bracket.py",
+    "part_05_top_l_bracket.py",
     "assembly.py"
 ]
 
