@@ -80,7 +80,6 @@ clothes-drying-rack/
 ├── part_05_top_l_bracket.py         ← universal modular T-bracket (3 female sockets) for inline or top connections
 ├── part_06_drying_rod.py            ← universal stadium-profile rod segment
 ├── part_07_threaded_adapter_pin.py  ← male-to-male pin for female-to-female joints
-├── part_08_stability_bar.py
 ├── part_09_locking_hinge.py
 ├── part_10_foot_cap.py
 ├── part_11_rod_end_cap.py

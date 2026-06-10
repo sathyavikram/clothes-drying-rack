@@ -112,9 +112,12 @@ def build_assembly():
         
         P_local_A_top = None
         P_local_B_top = None
+        bracket_mid_A = None
+        bracket_mid_B = None
         
         for i in range(num_leg_segments):
             y_val = 125 + i * 170
+            y_val_bot = y_val + 60.0 * params.SCALE # Shift down for mid T-bracket
             
             place_a_top = App.Placement(App.Vector(0, y_val, leg_d_half), App.Rotation(App.Vector(1,0,0), -90))
             leg_a_top = base_leg.copy()
@@ -124,10 +127,14 @@ def build_assembly():
             if i == num_leg_segments - 1:
                 P_local_A_top = place_a_top.multVec(App.Vector(0, 0, 85.0))
                 
-            place_a_bot = App.Placement(App.Vector(0, -y_val, leg_d_half), App.Rotation(App.Vector(1,0,0), -90))
+            place_a_bot = App.Placement(App.Vector(0, -y_val_bot, leg_d_half), App.Rotation(App.Vector(1,0,0), -90))
             leg_a_bot = base_leg.copy()
             leg_a_bot.Placement = trans_world.multiply(place_a_bot.multiply(base_leg.Placement))
             add_part_to_doc(doc, leg_a_bot, f"{prefix}_Leg_A_Bot_{i}", color_leg_2)
+            
+            if i == 0:
+                P_local_A_mid = place_a_bot.multVec(App.Vector(0, 0, 85.0))
+                bracket_mid_A = place_t_bracket(doc, prefix, "TMidBracket_A", P_local_A_mid, 0, trans_world, is_right_side)
             
             place_b_top = App.Placement(App.Vector(0, y_val, leg_d_half + arm_b_z), App.Rotation(App.Vector(1,0,0), -90))
             leg_b_top = base_leg.copy()
@@ -137,18 +144,22 @@ def build_assembly():
             if i == num_leg_segments - 1:
                 P_local_B_top = rot_65.multiply(place_b_top).multVec(App.Vector(0, 0, 85.0))
                 
-            place_b_bot = App.Placement(App.Vector(0, -y_val, leg_d_half + arm_b_z), App.Rotation(App.Vector(1,0,0), -90))
+            place_b_bot = App.Placement(App.Vector(0, -y_val_bot, leg_d_half + arm_b_z), App.Rotation(App.Vector(1,0,0), -90))
             leg_b_bot = base_leg.copy()
             leg_b_bot.Placement = trans_world.multiply(rot_65.multiply(place_b_bot.multiply(base_leg.Placement)))
             add_part_to_doc(doc, leg_b_bot, f"{prefix}_Leg_B_Bot_{i}", color_leg_2)
             
+            if i == 0:
+                P_local_B_mid = rot_65.multiply(place_b_bot).multVec(App.Vector(0, 0, 85.0))
+                bracket_mid_B = place_t_bracket(doc, prefix, "TMidBracket_B", P_local_B_mid, 65, trans_world, is_right_side)
+            
         bracket_A = place_t_bracket(doc, prefix, "TBracket_A", P_local_A_top, 0, trans_world, is_right_side)
         bracket_B = place_t_bracket(doc, prefix, "TBracket_B", P_local_B_top, 65, trans_world, is_right_side)
         
-        return bracket_A, bracket_B
+        return bracket_A, bracket_B, bracket_mid_A, bracket_mid_B
 
-    left_bracket_A, left_bracket_B = build_x_frame(left_z, "Left", False)
-    right_bracket_A, right_bracket_B = build_x_frame(right_z, "Right", True)
+    left_bracket_A, left_bracket_B, left_mid_A, left_mid_B = build_x_frame(left_z, "Left", False)
+    right_bracket_A, right_bracket_B, right_mid_A, right_mid_B = build_x_frame(right_z, "Right", True)
 
     def build_horizontal_rods(start_bracket_world, prefix, add_adapter=True):
         if add_adapter:
@@ -177,6 +188,9 @@ def build_assembly():
 
     build_horizontal_rods(left_bracket_A, "Horiz_A")
     build_horizontal_rods(left_bracket_B, "Horiz_B")
+    
+    build_horizontal_rods(left_mid_A, "Mid_Stability_A")
+    build_horizontal_rods(left_mid_B, "Mid_Stability_B")
 
     objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
     Import.export(objs, EXPORT_STEP)

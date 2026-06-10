@@ -51,42 +51,36 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 5 — Universal Drying Rod & Adapter Pin (`part_06_drying_rod.py`, `part_07_threaded_adapter_pin.py`) ✅
-- **Universal Drying Rod** (`part_06_drying_rod.py`): Stadium profile (pill shape) hollow segment ≤ 220 mm, transitioning to square ends. Uses male threaded peg / female threaded socket joinery. This exact part will be reused for the main top rod, secondary mid-height rod, and side arm rod.
+## Phase 5 — Universal Drying Rod, Adapter Pin, & Middle Stability Bar (`part_06_drying_rod.py`, `part_07_threaded_adapter_pin.py`) ✅
+- **Universal Drying Rod** (`part_06_drying_rod.py`): Stadium profile (pill shape) hollow segment ≤ 220 mm, transitioning to square ends. Uses male threaded peg / female threaded socket joinery. This exact part will be reused for the main top rod, secondary mid-height rod, side arm rod, and the middle stability bars.
 - **Threaded Adapter Pin** (`part_07_threaded_adapter_pin.py`): A short male-to-male threaded adapter pin used to connect two female sockets (e.g., joining the right end of a rod assembly to a T-bracket, or connecting a T-bracket's top socket to the next Leg segment).
+- **Middle Stability Bar**: Reuses `part_06_drying_rod.py` to span between the two X-frame assemblies at mid-height, and reuses `part_05_top_l_bracket.py` placed inline on the X-frame legs to connect the bar. Completed directly by updating `assembly.py`.
 - Export STEP + STL each; visual validation pass
 
 ---
 
-## Phase 6 — Middle Stability Bar (`part_08_stability_bar.py`)
-- Short horizontal bar spanning between the two X-frame assemblies at mid-height
-- Fits within build plate (no segmentation needed)
-- Export STEP + STL; visual validation pass
-
----
-
-## Phase 7 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
+## Phase 6 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
 - Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 8 — Rod End Cap (`part_11_rod_end_cap.py`)
+## Phase 7 — Rod End Cap (`part_11_rod_end_cap.py`)
 - Small stadium profile (pill shape) plug that caps the open ends of the drying rods
 - Press-fit with tight tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 9 — Windproof Hook (`part_12_windproof_hook.py`)
+## Phase 8 — Windproof Hook (`part_12_windproof_hook.py`)
 - Small J-hook accessory that clips onto the stadium-profile drying rod
 - Clip opening matches stadium profile dimensions + tolerance
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 10 — Locking Hinge Body (`part_09_locking_hinge.py`) (To Be Decided)
+## Phase 9 — Locking Hinge Body (`part_09_locking_hinge.py`) (To Be Decided)
 - Flat rectangular plate with two pivot holes and a locking notch/detent
 - Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
 - *Note: We will evaluate if this part is strictly necessary before the Full Assembly phase.*
@@ -94,7 +88,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 11 — Final Review & Full Assembly
+## Phase 10 — Final Review & Full Assembly
 - Visual inspection of each individual part to identify and fix any small lingering issues.
 - (If issues are found, this step can be expanded into multiple sub-phases as needed to address them).
 - Update `assembly.py` to position all instances correctly (2 X-frames, 3 rods, 1 stability bar, optionally 6 hinges, 4 foot caps).

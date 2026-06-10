@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-06-10
+- Combined Phase 5 and Phase 6 in the project roadmap, integrating the Middle Stability Bar as a re-use of the Universal Drying Rod and T-Bracket.
+- Updated `assembly.py` to construct the middle stability bars using existing rod and bracket components.
+- Removed `part_08_stability_bar.py` from `tech-stack.md` to reflect part reuse.
+- Shifted subsequent roadmap phases down by one.
+
 ## 2026-06-09
 - Completed Phase 5: Universal Drying Rod & Adapter Pin implementation.
 - Created `part_06_drying_rod.py` featuring a stadium profile transitioning to square ends, utilizing male peg and female socket joinery.
