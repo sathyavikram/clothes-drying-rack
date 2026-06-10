@@ -45,6 +45,16 @@ TOLERANCE_PRESS      =    0.2 * SCALE   # press-fit interference per side
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 EXPORT_DIR  = os.path.join(PROJECT_DIR, "exports")
 
+# ─── Universal Drying Rod (Phase 5) ───────────────────────────────────────────
+ROD_STADIUM_WIDTH    =   25.0 * SCALE
+ROD_STADIUM_HEIGHT   =   15.0 * SCALE
+ROD_STADIUM_WALL     =    3.0 * SCALE
+ROD_TRANSITION_LEN   =   20.0 * SCALE
+
+# ─── Threaded Adapter Pin (Phase 5) ───────────────────────────────────────────
+ADAPTER_PIN_LENGTH   =   50.0 * SCALE
+ADAPTER_PIN_HALF_LEN =   25.0 * SCALE
+
 if __name__ == "__main__":
     for k, v in globals().items():
         if k.isupper() and isinstance(v, (int, float, str)):

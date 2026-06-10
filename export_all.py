@@ -9,6 +9,8 @@ SCRIPTS = [
     "part_03_xframe_hinge_top.py",
     "part_04_xframe_hinge_pin.py",
     "part_05_top_l_bracket.py",
+    "part_06_drying_rod.py",
+    "part_07_threaded_adapter_pin.py",
     "assembly.py"
 ]
 

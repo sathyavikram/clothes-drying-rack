@@ -51,7 +51,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 5 — Universal Drying Rod & Adapter Pin (`part_06_drying_rod.py`, `part_07_threaded_adapter_pin.py`)
+## Phase 5 — Universal Drying Rod & Adapter Pin (`part_06_drying_rod.py`, `part_07_threaded_adapter_pin.py`) ✅
 - **Universal Drying Rod** (`part_06_drying_rod.py`): Stadium profile (pill shape) hollow segment ≤ 220 mm, transitioning to square ends. Uses male threaded peg / female threaded socket joinery. This exact part will be reused for the main top rod, secondary mid-height rod, and side arm rod.
 - **Threaded Adapter Pin** (`part_07_threaded_adapter_pin.py`): A short male-to-male threaded adapter pin used to connect two female sockets (e.g., joining the right end of a rod assembly to a T-bracket, or connecting a T-bracket's top socket to the next Leg segment).
 - Export STEP + STL each; visual validation pass

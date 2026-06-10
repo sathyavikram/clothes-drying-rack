@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-09
+- Completed Phase 5: Universal Drying Rod & Adapter Pin implementation.
+- Created `part_06_drying_rod.py` featuring a stadium profile transitioning to square ends, utilizing male peg and female socket joinery.
+- Created `part_07_threaded_adapter_pin.py` to serve as a male-to-male threaded adapter for connecting female sockets.
+- Rewrote `assembly.py` to correctly align the right frame without mirrored yaw rotation, ensuring flawless horizontal rod connections.
+- Simplified `assembly.py` rendering to use 1 leg segment and 1 horizontal rod for lightweight multi-view visual validation.
+
 ## 2026-06-08
 - Completed Phase 4: Top L-Connector Bracket implementation.
 - Redesigned the top bracket into a single-piece rigid L-shaped bracket with symmetric female threaded blind sockets, replacing the previous multi-part design.
