@@ -32,19 +32,18 @@ def construct_rod_end_cap():
     sphere = Part.makeSphere(r_sphere, App.Vector(0, 0, cap_base_height - r_sphere + dome_height))
     
     # Cut off everything below z = cap_base_height
-    cutter = Part.makeCylinder(r_sphere + 10, r_sphere * 2, App.Vector(0, 0, cap_base_height - r_sphere * 2))
-    dome = sphere.cut(cutter)
+    cutter_plane = Part.makeCylinder(r_sphere + 10, r_sphere * 2, App.Vector(0, 0, cap_base_height - r_sphere * 2))
+    dome = sphere.cut(cutter_plane)
     
-    cap_body = Part.makeCompound([base, dome])
+    cap_body = base.fuse(dome)
     
-    # ─── MALE THREAD (Bottom, Z = 0 pointing down into negative Z) ──────────
+    # ─── MALE THREAD (Generated pointing UP from Z=0, then rotated DOWN) ───
     t_pitch   = params.PEG_THREAD_PITCH
     t_length  = params.PEG_LENGTH
     
     tm_radius  = params.PEG_THREAD_RADIUS - params.THREAD_CLEARANCE
     tm_r_inner = tm_radius - (t_pitch * 0.45)
     
-    # Thread generated at origin (Z=0 to t_length)
     tm_helix = Part.makeHelix(t_pitch, t_length, tm_r_inner, 0)
     
     inner_X_m = tm_r_inner - 2.0 * params.SCALE
@@ -55,29 +54,28 @@ def construct_rod_end_cap():
     tm_wire = Part.Wire(Part.makePolygon([p1, p2, p3, p4, p1]))
     
     tm_sweep = Part.Wire(tm_helix).makePipeShell([tm_wire], True, True)
-    tm_sweep = Part.Solid(tm_sweep)
     
     tm_core = Part.makeCylinder(tm_r_inner, t_length, App.Vector(0, 0, 0))
-    male_peg_raw = Part.makeCompound([tm_core, tm_sweep])
     
-    # Now position it so it points down from Z=0
-    male_peg_raw.Placement = App.Placement(App.Vector(0, 0, -t_length), App.Rotation(0,0,0,1))
-    
-    # Chamfer at the tip of the peg (which is at Z = -t_length)
     chamfer_m = Part.makeCone(
         tm_radius + 2.0, tm_r_inner,
         t_pitch / 2 + 1,
-        App.Vector(0, 0, -t_length - 1)
+        App.Vector(0, 0, t_length - t_pitch / 2 - 1)
     )
     end_cutter_m = Part.makeCylinder(
         tm_radius + 5.0, t_pitch + 2.0,
-        App.Vector(0, 0, -t_length - 2.0) 
+        App.Vector(0, 0, t_length - 1)
     )
     
-    male_peg = male_peg_raw.cut(end_cutter_m.cut(chamfer_m))
+    tm_sweep = tm_sweep.cut(end_cutter_m.cut(chamfer_m))
+    tm_core = tm_core.cut(end_cutter_m.cut(chamfer_m))
+    
+    male_peg = Part.makeCompound([tm_core, tm_sweep])
+    
+    # Rotate 180 around X so the peg points DOWN into the negative Z axis.
+    male_peg.Placement = App.Placement(App.Vector(0, 0, 0), App.Rotation(App.Vector(1,0,0), 180))
     
     shape = Part.makeCompound([cap_body, male_peg])
-    shape.removeSplitter()
     
     # Print orientation: Peg pointing UP, dome pointing DOWN.
     # This requires a small brim/raft for the dome apex, but ensures perfect horizontal layers for the threads and no messy supports under the cap's shoulder overhang.
