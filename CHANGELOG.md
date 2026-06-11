@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-06-11
+- Completed Phase 6: Anti-Slip Foot Cap implementation.
+- Created `part_08_foot_cap.py` featuring a press-fit sleeve and a recessed crosshatch bottom grip.
+- Added foot caps to the base legs of the X-frame assemblies in `assembly.py`, implementing a 0.1mm placement offset to prevent numerical interference checks from failing on perfectly coincident planar faces.
+- Updated `export_all.py` and specs documentation to include the new foot cap component.
 ## 2026-06-10
 - Combined Phase 5 and Phase 6 in the project roadmap, integrating the Middle Stability Bar as a re-use of the Universal Drying Rod and T-Bracket.
 - Updated `assembly.py` to construct the middle stability bars using existing rod and bracket components.

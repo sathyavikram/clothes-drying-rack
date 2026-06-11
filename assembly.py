@@ -42,12 +42,17 @@ def build_assembly():
     t_bracket_base = load_step("part_05_top_l_bracket.step")
     adapter_pin = load_step("part_07_threaded_adapter_pin.step")
     drying_rod = load_step("part_06_drying_rod.step")
+    try:
+        foot_cap = load_step("part_08_foot_cap.step")
+    except:
+        foot_cap = None
 
     color_arm_a  = (0.3, 0.8, 0.3)
     color_arm_b  = (0.3, 0.6, 0.8)
     color_pin    = (0.8, 0.8, 0.2)
     color_leg_1  = (0.7, 0.7, 0.7)
     color_leg_2  = (0.5, 0.5, 0.5)
+    color_foot_cap = (0.1, 0.1, 0.1)
 
     base_leg = seg_shape.copy()
     base_leg.Placement = App.Placement(App.Vector(0,0,0), App.Rotation(App.Vector(1,0,0), -90))
@@ -132,6 +137,12 @@ def build_assembly():
             leg_a_bot.Placement = trans_world.multiply(place_a_bot.multiply(base_leg.Placement))
             add_part_to_doc(doc, leg_a_bot, f"{prefix}_Leg_A_Bot_{i}", color_leg_2)
             
+            if i == num_leg_segments - 1 and foot_cap:
+                cap_a = foot_cap.copy()
+                cap_a_local = App.Placement(App.Vector(0, 0, -85.0 - (4.0 * params.SCALE) - 0.1), App.Rotation())
+                cap_a.Placement = trans_world.multiply(place_a_bot.multiply(cap_a_local))
+                add_part_to_doc(doc, cap_a, f"{prefix}_FootCap_A_{i}", color_foot_cap)
+            
             if i == 0:
                 P_local_A_mid = place_a_bot.multVec(App.Vector(0, 0, 85.0))
                 bracket_mid_A = place_t_bracket(doc, prefix, "TMidBracket_A", P_local_A_mid, 0, trans_world, is_right_side)
@@ -148,6 +159,12 @@ def build_assembly():
             leg_b_bot = base_leg.copy()
             leg_b_bot.Placement = trans_world.multiply(rot_65.multiply(place_b_bot.multiply(base_leg.Placement)))
             add_part_to_doc(doc, leg_b_bot, f"{prefix}_Leg_B_Bot_{i}", color_leg_2)
+            
+            if i == num_leg_segments - 1 and foot_cap:
+                cap_b = foot_cap.copy()
+                cap_b_local = App.Placement(App.Vector(0, 0, -85.0 - (4.0 * params.SCALE) - 0.1), App.Rotation())
+                cap_b.Placement = trans_world.multiply(rot_65.multiply(place_b_bot.multiply(cap_b_local)))
+                add_part_to_doc(doc, cap_b, f"{prefix}_FootCap_B_{i}", color_foot_cap)
             
             if i == 0:
                 P_local_B_mid = rot_65.multiply(place_b_bot).multVec(App.Vector(0, 0, 85.0))

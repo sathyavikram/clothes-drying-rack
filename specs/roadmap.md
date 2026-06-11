@@ -59,7 +59,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 6 — Anti-Slip Foot Cap (`part_10_foot_cap.py`)
+## Phase 6 — Anti-Slip Foot Cap (`part_08_foot_cap.py`) ✅
 - Cap that slides over the rectangular segment body end
 - Textured or recessed base for grip
 - Export STEP + STL; visual validation pass
