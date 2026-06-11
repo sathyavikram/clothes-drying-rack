@@ -12,6 +12,7 @@ SCRIPTS = [
     "part_06_drying_rod.py",
     "part_07_threaded_adapter_pin.py",
     "part_08_foot_cap.py",
+    "part_09_rod_end_cap.py",
     "assembly.py"
 ]
 

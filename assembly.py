@@ -46,6 +46,10 @@ def build_assembly():
         foot_cap = load_step("part_08_foot_cap.step")
     except:
         foot_cap = None
+    try:
+        rod_end_cap = load_step("part_09_rod_end_cap.step")
+    except:
+        rod_end_cap = None
 
     color_arm_a  = (0.3, 0.8, 0.3)
     color_arm_b  = (0.3, 0.6, 0.8)
@@ -172,6 +176,18 @@ def build_assembly():
             
         bracket_A = place_t_bracket(doc, prefix, "TBracket_A", P_local_A_top, 0, trans_world, is_right_side)
         bracket_B = place_t_bracket(doc, prefix, "TBracket_B", P_local_B_top, 65, trans_world, is_right_side)
+        
+        if rod_end_cap:
+            w = params.LEG_WIDTH
+            cap_local = App.Placement(App.Vector(0, w/2 + 0.1, 0), App.Rotation(App.Vector(1,0,0), 90))
+            
+            cap_a = rod_end_cap.copy()
+            cap_a.Placement = bracket_A.multiply(cap_local)
+            add_part_to_doc(doc, cap_a, f"{prefix}_EndCap_A", (0.2, 0.2, 0.2))
+            
+            cap_b = rod_end_cap.copy()
+            cap_b.Placement = bracket_B.multiply(cap_local)
+            add_part_to_doc(doc, cap_b, f"{prefix}_EndCap_B", (0.2, 0.2, 0.2))
         
         return bracket_A, bracket_B, bracket_mid_A, bracket_mid_B
 

@@ -66,21 +66,14 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 7 — Rod End Cap (`part_11_rod_end_cap.py`)
-- Small stadium profile (pill shape) plug that caps the open ends of the drying rods
-- Press-fit with tight tolerance
+## Phase 7 — Rod End Cap (`part_09_rod_end_cap.py`) ✅
+- Cylindrical profile matching the main drying rods with a slightly domed outer face for a polished look.
+- Uses a standard timed male threaded peg to securely lock into the female sockets on the T-Brackets.
 - Export STEP + STL; visual validation pass
 
 ---
 
-## Phase 8 — Windproof Hook (`part_12_windproof_hook.py`)
-- Small J-hook accessory that clips onto the stadium-profile drying rod
-- Clip opening matches stadium profile dimensions + tolerance
-- Export STEP + STL; visual validation pass
-
----
-
-## Phase 9 — Locking Hinge Body (`part_09_locking_hinge.py`) (To Be Decided)
+## Phase 8 — Locking Hinge Body (`part_10_locking_hinge.py`) (To Be Decided)
 - Flat rectangular plate with two pivot holes and a locking notch/detent
 - Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
 - *Note: We will evaluate if this part is strictly necessary before the Full Assembly phase.*
@@ -88,7 +81,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 10 — Final Review & Full Assembly
+## Phase 9 — Final Review & Full Assembly
 - Visual inspection of each individual part to identify and fix any small lingering issues.
 - (If issues are found, this step can be expanded into multiple sub-phases as needed to address them).
 - Update `assembly.py` to position all instances correctly (2 X-frames, 3 rods, 1 stability bar, optionally 6 hinges, 4 foot caps).
