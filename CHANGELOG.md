@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-06-11
+- Removed Locking Hinge and Windproof Hook from the project roadmap and tech stack scope to simplify the design; shifted Final Assembly to Phase 8.
 - Completed Phase 7: Rod End Cap implementation.
 - Created `part_09_rod_end_cap.py` with a domed circular profile and a standard male threaded peg, pivoting away from the original press-fit design for better security.
 - Updated `assembly.py` to insert rod end caps into the top-facing sockets of the upper T-Brackets.

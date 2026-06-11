@@ -73,15 +73,7 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 8 — Locking Hinge Body (`part_10_locking_hinge.py`) (To Be Decided)
-- Flat rectangular plate with two pivot holes and a locking notch/detent
-- Models the 6-locking-hinge design seen in reference images, strictly enabling the foldable mechanism so the rack can collapse flat
-- *Note: We will evaluate if this part is strictly necessary before the Full Assembly phase.*
-- Export STEP + STL; visual validation pass
-
----
-
-## Phase 9 — Final Review & Full Assembly
+## Phase 8 — Final Review & Full Assembly
 - Visual inspection of each individual part to identify and fix any small lingering issues.
 - (If issues are found, this step can be expanded into multiple sub-phases as needed to address them).
 - Update `assembly.py` to position all instances correctly (2 X-frames, 3 rods, 1 stability bar, optionally 6 hinges, 4 foot caps).

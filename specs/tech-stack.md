@@ -82,8 +82,6 @@ clothes-drying-rack/
 ├── part_07_threaded_adapter_pin.py  ← male-to-male pin for female-to-female joints
 ├── part_08_foot_cap.py
 ├── part_09_rod_end_cap.py
-├── part_10_windproof_hook.py
-├── part_11_locking_hinge.py
 ├── assembly.py
 ├── export_all.py
 ├── run.sh
