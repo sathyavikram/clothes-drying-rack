@@ -73,9 +73,8 @@ Build, validate, and commit before moving to the next phase.
 
 ---
 
-## Phase 8 — Final Review & Full Assembly
+## Phase 8 — Final Review & Full Assembly ✅
 - Visual inspection of each individual part to identify and fix any small lingering issues.
-- (If issues are found, this step can be expanded into multiple sub-phases as needed to address them).
 - Update `assembly.py` to position all instances correctly (2 X-frames, 3 rods, 1 stability bar, optionally 6 hinges, 4 foot caps).
 - Run final export script to clear `exports/` and regenerate all parts cleanly.
 - Export `assembly.step` and `assembly.stl`.

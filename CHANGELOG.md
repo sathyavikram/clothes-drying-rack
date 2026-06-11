@@ -1,6 +1,11 @@
 # Changelog
 
 ## 2026-06-11
+- Completed Phase 8: Final Review & Full Assembly.
+- Verified visual geometry of all 9 individual printable parts.
+- Updated `assembly.py` to construct the entire drying rack dynamically with adjustable segment sizing (set to a scalable mini-rack for rapid export verification).
+- Rendered and validated the final assembly layout (2 complete X-frames with all joint hinges, 3 drying rods spanning the frames, the middle stability bar, and all end caps).
+- Exported final clean `assembly.step` and `assembly.stl` files, validating the assembly's integrity and structural intersections.
 - Removed Locking Hinge and Windproof Hook from the project roadmap and tech stack scope to simplify the design; shifted Final Assembly to Phase 8.
 - Completed Phase 7: Rod End Cap implementation.
 - Created `part_09_rod_end_cap.py` with a domed circular profile and a standard male threaded peg, pivoting away from the original press-fit design for better security.

@@ -64,8 +64,8 @@ def build_assembly():
     arm_b_z = 25.4
     rot_65 = App.Placement(App.Vector(0,0,0), App.Rotation(App.Vector(0,0,1), 65))
     
-    num_leg_segments = 1
-    num_horizontal_rods = 1
+    num_leg_segments = 2
+    num_horizontal_rods = 2
     
     rod_length = 170.0 * params.SCALE
     arm_len_x = 45.0 * params.SCALE
