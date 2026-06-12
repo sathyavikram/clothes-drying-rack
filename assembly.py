@@ -219,11 +219,11 @@ def build_assembly():
             rod_placed.Placement = start_bracket_world.multiply(rod_local_placement).multiply(unrot_rod)
             add_part_to_doc(doc, rod_placed, f"{prefix}_Drying_Rod_{i}", (0.8, 0.5, 0.2))
 
-    build_horizontal_rods(left_bracket_A, "Horiz_A")
-    build_horizontal_rods(left_bracket_B, "Horiz_B")
+    build_horizontal_rods(left_bracket_A, "Top_Rod_A")
+    build_horizontal_rods(left_bracket_B, "Top_Rod_B")
     
-    build_horizontal_rods(left_mid_A, "Mid_Stability_A")
-    build_horizontal_rods(left_mid_B, "Mid_Stability_B")
+    build_horizontal_rods(left_mid_A, "Mid_Rod")
+    build_horizontal_rods(left_mid_B, "Stability_Bar")
 
     objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
     Import.export(objs, EXPORT_STEP)
