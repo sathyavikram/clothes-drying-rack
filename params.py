@@ -1,4 +1,4 @@
-SCALE = 1.0
+SCALE = 1.64
 
 import os
 

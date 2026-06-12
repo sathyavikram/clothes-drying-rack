@@ -227,9 +227,9 @@ def build_assembly():
 
     objs = [obj for obj in doc.Objects if hasattr(obj, "Shape")]
     Import.export(objs, EXPORT_STEP)
-    compound = Part.makeCompound([obj.Shape for obj in objs])
-    compound.exportStl(EXPORT_STL)
-    print(f"Assembly exported to {EXPORT_STEP} and {EXPORT_STL}")
+    # compound = Part.makeCompound([obj.Shape for obj in objs])
+    # compound.exportStl(EXPORT_STL)
+    print(f"Assembly exported to {EXPORT_STEP}")
 
 if __name__ == "__main__":
     build_assembly()

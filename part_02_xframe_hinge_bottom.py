@@ -145,7 +145,8 @@ def construct_hinge_bottom():
 
     # Cut pivot thread into arm (sequentially to avoid OpenCASCADE procedural shape corruption)
     # The bottom trimmer removes the extra thread geometry from the hub bottom
-    shape_cut = body_base.cut(pivot_cutter).cut(pivot_chamfer)
+    pivot_cutter_trimmed = pivot_cutter.cut(bottom_trimmer)
+    shape_cut = body_base.cut(pivot_cutter_trimmed).cut(pivot_chamfer)
     
     shape = Part.makeCompound([shape_cut, male_peg])
     
